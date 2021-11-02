@@ -1,0 +1,36 @@
+.pagination {
+  display: flex;
+  align-items: baseline;
+
+  &--lt, &--gt {
+    border: none;
+    background: none;
+    font-size: 12px;
+    cursor: pointer;
+    width: 22px;
+    height: 22px;
+  }
+
+  &--lt-active, &--gt-active {
+    color: rgba(0, 0, 0, 0.35);
+  }
+
+  &--count {
+    border: none;
+    background: none;
+    font-size: 12px;
+    cursor: pointer;
+    width: 22px;
+    height: 22px;
+  }
+
+  &--active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #1890FF;
+    border-radius: 4px;
+  }
+  
+}
+
