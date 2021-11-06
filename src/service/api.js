@@ -37,7 +37,7 @@ export const getArticles = async (offset = 0) => {
 
 export const getArticle = async (slugArticle) => {
   const article = await getRequest(`/articles/${slugArticle}`);
-  return article.article;
+  return article;
 };
 
 export const userLogin = async (body) => {

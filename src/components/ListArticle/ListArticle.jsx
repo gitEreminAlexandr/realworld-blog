@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { format } from 'date-fns';
 import PropTypes from 'prop-types';
@@ -12,10 +11,6 @@ import { getArticlesAction, loandingIndicator } from '../../store/action/action'
 import classes from './ListArticle.module.scss';
 
 const ListArticle = ({ globalArticle, onGetGlobalArticles, onLoanding, history }) => {
-  const classesLike = classNames(
-    classes['list-article__like--sign'],
-    false ? classes['list-article__like--sign-active'] : null
-  );
 
   useEffect(() => {
     onGetGlobalArticles(0);
@@ -41,10 +36,6 @@ const ListArticle = ({ globalArticle, onGetGlobalArticles, onLoanding, history }
                         {title}
                       </button>{' '}
                     </h4>
-                    <button type="button" className={classes['list-article__like']}>
-                      <div className={classesLike} />
-                      <p>12</p>
-                    </button>
                   </div>
                   <div className={classes['list-article__tag']}>
                     {tagList.map((item) => (

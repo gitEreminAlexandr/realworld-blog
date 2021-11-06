@@ -65,7 +65,9 @@ export const getArticlesAction = (offset) => (dispatch) => {
 
 export const getBodyArticleAction = (slug) => (dispatch) => {
   getArticle(slug)
-    .then((body) => dispatch(articleAction(body)))
+    .then((body) => { 
+      if(body.article === undefined) throw Error; 
+      dispatch(articleAction(body.article))})
     .then(() => dispatch(loandingIndicator(false)))
     .catch(() => dispatch(errorIndicator(true)));
 };

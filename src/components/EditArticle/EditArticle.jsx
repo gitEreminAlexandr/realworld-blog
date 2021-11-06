@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -18,12 +19,13 @@ const EditArticle = ({ article, user, history }) => {
   });
 
   const onSubmitNewArticle = (form) => {
-    JSON.stringify({
+    alert(JSON.stringify({
       article: {
         ...form,
         tagList: saveTags,
       },
-    });
+    }))
+    history.push(`/articles/${slug}`)
   };
 
   if (UserEmail !== user) {

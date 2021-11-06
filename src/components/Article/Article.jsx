@@ -17,7 +17,6 @@ import Question from '../../img/Question-mark.svg';
 import classes from './Article.module.scss';
 
 const Article = ({ article, slug, onGetArticle, loanding, errorIndicator, user, history, onDeleteArticleAction }) => {
-  const classesLike = classNames(classes['article__like--sign'], false ? classes['article__like--sign-active'] : null);
   
   const [modalIsOpen, setIsOpen] = useState(false);
   const openModal = () => setIsOpen(true);
@@ -35,6 +34,7 @@ const Article = ({ article, slug, onGetArticle, loanding, errorIndicator, user, 
     return <ErrorIndicator />;
   }
 
+
   const articleDelete = (slugArticle) => {
     onDeleteArticleAction(slugArticle);
     history.push(`/articles/`);
@@ -50,10 +50,6 @@ const Article = ({ article, slug, onGetArticle, loanding, errorIndicator, user, 
         <div className={classes['article__container-title']}>
           <div className={classes['article__container-title--name']}>
             <h4 className={classes.article__title}>{title}</h4>
-            <button type="button" className={classes.article__like}>
-              <div className={classesLike} />
-              <p>12</p>
-            </button>
           </div>
           <div className={classes.article__tag}>
             {tagList.map((item) => (
