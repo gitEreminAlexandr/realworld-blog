@@ -5,12 +5,13 @@ import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 
 import Pagination from '../Pagination/Pagination';
+import SpinnerIndicator from '../SpinnerIndicator'
 
 import { getArticlesAction, loandingIndicator } from '../../store/action/action';
 
 import classes from './ListArticle.module.scss';
 
-const ListArticle = ({ globalArticle, onGetGlobalArticles, onLoanding }) => {
+const ListArticle = ({ globalArticle, onGetGlobalArticles, onLoanding, loanding }) => {
 
   const history = useHistory();
 
@@ -23,10 +24,12 @@ const ListArticle = ({ globalArticle, onGetGlobalArticles, onLoanding }) => {
     onGetGlobalArticles(0);
   }, [onGetGlobalArticles]);
 
+ 
+
   return (
     <div className={classes['list-article']}>
       <ul className={classes['list-article__list']}>
-        {globalArticle.map(({ author, title, tagList, updatedAt, description, slug }) => (
+        {loanding ? <SpinnerIndicator /> : globalArticle.map(({ author, title, tagList, updatedAt, description, slug }) => (
           <li key={title} className={classes['list-article__item']}>
             <article>
               <header className={classes['list-article__header']}>
@@ -83,6 +86,7 @@ ListArticle.propTypes = {
   globalArticle: PropTypes.arrayOf(PropTypes.object).isRequired,
   onGetGlobalArticles: PropTypes.func.isRequired,
   onLoanding: PropTypes.func.isRequired,
+  loanding: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = ({ articlesReduse, indicatorReduse }) => ({

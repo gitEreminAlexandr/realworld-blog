@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import {
   getArticle,
   getArticles,
@@ -49,7 +48,6 @@ export const userLoginError = () => ({
 });
 
 export const logOutAction = () => (dispatch) => {
-  deleteCookie('user');
   deleteCookie('token');
   dispatch({ type: 'LOG_OUT' });
 };
@@ -110,7 +108,8 @@ export const postUserLogin = (body) => (dispatch) => {
 
 export const newArticleAction = (bodyData) => (dispatch) => {
   const token = getCookie('token');
-  postNewArticle(token, bodyData)
+
+  postNewArticle(bodyData, token)
     .then((body) => dispatch(articleAction(body)))
     .then(() => dispatch(loandingIndicator(false)))
     .then(() => dispatch(loandingArticle(true)));
@@ -118,6 +117,7 @@ export const newArticleAction = (bodyData) => (dispatch) => {
 
 export const deleteArticleAction = (slug) => (dispatch) => {
   const token = getCookie('token');
+
   deleteArticle(slug, token)
     .then(() => dispatch({type: 'DELETE_ARTICLE'}))
     .then(() => dispatch(loandingIndicator(false)));

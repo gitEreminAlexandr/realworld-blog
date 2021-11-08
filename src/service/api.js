@@ -86,7 +86,7 @@ const postRequestIsToken = async (api, token, dataBody) => {
   }
 };
 
-export const postNewArticle = async (token, dataBody) => {
+export const postNewArticle = async (dataBody, token) => {
   const newArticle = await postRequestIsToken(`/articles`, token, dataBody);
   return newArticle.article;
 };

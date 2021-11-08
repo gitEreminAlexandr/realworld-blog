@@ -10,7 +10,7 @@ import classes from './Header.module.scss';
 const Header = ({ isLogin, user, onLogOut }) => (
   <header className={classes.header}>
     <h1 className={classes.header__title}>
-      <Link to="/articles">Realworld Blog</Link>
+      <Link to="/">Realworld Blog</Link>
     </h1>
     <ul className={classes.header__nav}>
       {isLogin ? (

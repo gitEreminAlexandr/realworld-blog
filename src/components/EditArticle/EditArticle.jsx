@@ -1,4 +1,3 @@
-/* eslint-disable no-alert */
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -24,6 +23,7 @@ const EditArticle = ({ article, user }) => {
   const history = useHistory();
 
   const onSubmitNewArticle = (form) => {
+    // eslint-disable-next-line no-alert
     alert(JSON.stringify({
       article: {
         ...form,

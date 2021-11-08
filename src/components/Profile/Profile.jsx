@@ -22,6 +22,7 @@ const Profile = ({ user }) => {
   });
 
   const onSubmitForm = (data) => {
+    // eslint-disable-next-line no-alert
     alert(JSON.stringify({ user: data }));
   };
 
