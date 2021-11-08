@@ -1,21 +1,26 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { connect } from 'react-redux';
-import { withRouter, Link } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { postUserLogin } from '../../store/action/action';
 
 import classes from './SignIn.module.scss';
 
-const SignIn = ({ onLogin, history, loggin, errorLoggin }) => {
+const SignIn = ({ onLogin, loggin, errorLoggin }) => {
+
   const { register, handleSubmit } = useForm();
+
+  const history = useHistory();
 
   useEffect(() => {
     if (loggin) {
       history.push(`/articles`);
     }
   }, [history, loggin]);
+
+
 
   const onSubmitForm = (data) => {
     onLogin(JSON.stringify({ user: data }));
@@ -66,7 +71,6 @@ const SignIn = ({ onLogin, history, loggin, errorLoggin }) => {
 
 SignIn.propTypes = {
   onLogin: PropTypes.func.isRequired,
-  history: PropTypes.objectOf(PropTypes.any).isRequired,
   loggin: PropTypes.bool.isRequired,
   errorLoggin: PropTypes.bool.isRequired,
 };
@@ -80,4 +84,4 @@ const mapDispatchToProps = (dispatch) => ({
   onLogin: (body) => dispatch(postUserLogin(body)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(SignIn));
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { format } from 'date-fns';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import Pagination from '../Pagination/Pagination';
 
@@ -10,7 +10,14 @@ import { getArticlesAction, loandingIndicator } from '../../store/action/action'
 
 import classes from './ListArticle.module.scss';
 
-const ListArticle = ({ globalArticle, onGetGlobalArticles, onLoanding, history }) => {
+const ListArticle = ({ globalArticle, onGetGlobalArticles, onLoanding }) => {
+
+  const history = useHistory();
+
+  const openArticle = (slug) => {
+    onLoanding(true);
+    history.push(`/articles/${slug}`);
+  }
 
   useEffect(() => {
     onGetGlobalArticles(0);
@@ -28,10 +35,7 @@ const ListArticle = ({ globalArticle, onGetGlobalArticles, onLoanding, history }
                     <h4 className={classes['list-article__title']}>
                       <button
                         type="button"
-                        onClick={() => {
-                          onLoanding(true);
-                          history.push(`/articles/${slug}`);
-                        }}
+                        onClick={() => openArticle(slug)}
                       >
                         {title}
                       </button>{' '}
@@ -79,7 +83,6 @@ ListArticle.propTypes = {
   globalArticle: PropTypes.arrayOf(PropTypes.object).isRequired,
   onGetGlobalArticles: PropTypes.func.isRequired,
   onLoanding: PropTypes.func.isRequired,
-  history: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 const mapStateToProps = ({ articlesReduse, indicatorReduse }) => ({
@@ -92,4 +95,4 @@ const mapDispatchToProps = (dispatch) => ({
   onLoanding: (value) => dispatch(loandingIndicator(value)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ListArticle));
+export default connect(mapStateToProps, mapDispatchToProps)(ListArticle);

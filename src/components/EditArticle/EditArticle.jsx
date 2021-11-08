@@ -4,12 +4,15 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
 import uniqid from 'uniqid';
+import { useHistory } from 'react-router-dom';
 
 import classes from './EditArticle.module.scss';
 
-const EditArticle = ({ article, user, history }) => {
+const EditArticle = ({ article, user }) => {
+
   const { tagList, UserEmail, slug } = article;
   const [saveTags] = useState(tagList);
+
   const { register, handleSubmit } = useForm({
     defaultValues: {
       title: article.title,
@@ -17,6 +20,8 @@ const EditArticle = ({ article, user, history }) => {
       body: article.body,
     },
   });
+
+  const history = useHistory();
 
   const onSubmitNewArticle = (form) => {
     alert(JSON.stringify({
@@ -87,7 +92,6 @@ const EditArticle = ({ article, user, history }) => {
 EditArticle.propTypes = {
   article: PropTypes.instanceOf(Object).isRequired,
   user: PropTypes.string.isRequired,
-  history: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 const mapStateToProps = ({ articlesReduse, userReduser }) => ({

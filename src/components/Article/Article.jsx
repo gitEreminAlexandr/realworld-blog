@@ -1,13 +1,11 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/no-children-prop */
 import React, { useEffect, useState } from 'react';
-import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { format } from 'date-fns';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import { getBodyArticleAction, deleteArticleAction } from '../../store/action/action';
 import SpinerIndicator from '../SpinnerIndicator';
@@ -16,11 +14,13 @@ import ErrorIndicator from '../ErrorIndicator';
 import Question from '../../img/Question-mark.svg';
 import classes from './Article.module.scss';
 
-const Article = ({ article, slug, onGetArticle, loanding, errorIndicator, user, history, onDeleteArticleAction }) => {
+const Article = ({ article, slug, onGetArticle, loanding, errorIndicator, user, onDeleteArticleAction }) => {
   
-  const [modalIsOpen, setIsOpen] = useState(false);
-  const openModal = () => setIsOpen(true);
-  const closeModal = () => setIsOpen(false);
+  const [modalDeleteArticle, setModalDeleteArticle] = useState(false);
+  const openModal = () => setModalDeleteArticle(true);
+  const closeModal = () => setModalDeleteArticle(false);
+
+  const history = useHistory();
 
   useEffect(() => {
     onGetArticle(slug);
@@ -34,15 +34,12 @@ const Article = ({ article, slug, onGetArticle, loanding, errorIndicator, user, 
     return <ErrorIndicator />;
   }
 
-
   const articleDelete = (slugArticle) => {
     onDeleteArticleAction(slugArticle);
     history.push(`/articles/`);
   }
 
   const { author, body, createdAt, description, tagList, title, UserEmail } = article;
-
-  
 
   return (
     <article className={classes.article}>
@@ -80,7 +77,7 @@ const Article = ({ article, slug, onGetArticle, loanding, errorIndicator, user, 
             <button className={classes['article__action--delete']} type="button" onClick={openModal}>
               Delete
             </button>
-            {modalIsOpen && (
+            {modalDeleteArticle && (
               <div className={classes.modal__wrapper}>
                 <p className={classes['modal__wrapper--text']}>
                   <img src={Question} alt="Question mark" />
@@ -118,7 +115,6 @@ Article.propTypes = {
   loanding: PropTypes.bool.isRequired,
   errorIndicator: PropTypes.bool.isRequired,
   user: PropTypes.string.isRequired,
-  history: PropTypes.objectOf(PropTypes.any).isRequired,
   onDeleteArticleAction: PropTypes.func.isRequired,
 };
 
@@ -134,4 +130,4 @@ const mapDispatchToProps = (dispatch) => ({
   onDeleteArticleAction: (slug) => dispatch(deleteArticleAction(slug))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Article));
+export default connect(mapStateToProps, mapDispatchToProps)(Article);

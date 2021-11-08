@@ -8,6 +8,7 @@ import { getArticlesAction, loandingIndicator } from '../../store/action/action'
 import classes from './Pagination.module.scss';
 
 function Pagination({ onGetGlobalArticles, onLoandingIndicator }) {
+  
   const [pages] = useState([
     { count: 1, offset: 0 },
     { count: 2, offset: 5 },

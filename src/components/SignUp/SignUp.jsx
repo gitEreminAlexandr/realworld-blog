@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -8,7 +8,8 @@ import { postUserRegistore } from '../../store/action/action';
 
 import classes from './SignUp.module.scss';
 
-const SignUp = ({ history, onRegister, errorRegistore, loggin }) => {
+const SignUp = ({ onRegister, errorRegistore, loggin }) => {
+
   const {
     register,
     handleSubmit,
@@ -16,6 +17,8 @@ const SignUp = ({ history, onRegister, errorRegistore, loggin }) => {
     watch,
   } = useForm();
   const password = watch('password');
+
+  const history = useHistory();
 
   useEffect(() => {
     if (loggin) {
@@ -113,7 +116,6 @@ const SignUp = ({ history, onRegister, errorRegistore, loggin }) => {
 };
 
 SignUp.propTypes = {
-  history: PropTypes.objectOf(PropTypes.any).isRequired,
   onRegister: PropTypes.func.isRequired,
   errorRegistore: PropTypes.bool.isRequired,
   loggin: PropTypes.bool.isRequired,
@@ -128,4 +130,4 @@ const mapDispatchToProps = (dispatch) => ({
   onRegister: (body) => dispatch(postUserRegistore(body)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(SignUp));
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

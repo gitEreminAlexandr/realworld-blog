@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { connect } from 'react-redux';
@@ -7,6 +6,7 @@ import PropTypes from 'prop-types';
 import classes from './Profile.module.scss';
 
 const Profile = ({ user }) => {
+  
   const {
     register,
     handleSubmit,

@@ -3,16 +3,19 @@ import uniqid from 'uniqid';
 import { useForm } from 'react-hook-form';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import { newArticleAction, loandingArticle } from '../../store/action/action';
 
 import classes from './NewArticle.module.scss';
 
-const NewArticle = ({ onNewArticle, article, history, loadingArticleValue, onLoandingArticle }) => {
+const NewArticle = ({ onNewArticle, article, loadingArticleValue, onLoandingArticle }) => {
+
   const [saveTags, setSaveTags] = useState([]);
   const inputTag = useRef();
+
   const { register, handleSubmit } = useForm();
+  const history = useHistory();
 
   useEffect(() => {
     if (loadingArticleValue) {
@@ -112,7 +115,6 @@ const NewArticle = ({ onNewArticle, article, history, loadingArticleValue, onLoa
 NewArticle.propTypes = {
   onNewArticle: PropTypes.func.isRequired,
   article: PropTypes.instanceOf(Object).isRequired,
-  history: PropTypes.objectOf(PropTypes.any).isRequired,
   loadingArticleValue: PropTypes.bool.isRequired,
   onLoandingArticle: PropTypes.func.isRequired,
 };
@@ -127,4 +129,4 @@ const mapDispatchToProps = (dispatch) => ({
   onLoandingArticle: (value) => dispatch(loandingArticle(value)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(NewArticle));
+export default connect(mapStateToProps, mapDispatchToProps)(NewArticle);
