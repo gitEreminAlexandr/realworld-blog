@@ -1,13 +1,13 @@
 const initialState = {
   isLoggin: false,
   user: {},
-  errorRegistore: false,
+  errorRegister: false,
   errorLoggin: false,
 };
 
-const userReduser = (state = initialState, action) => {
+const userReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'SIGN_UP':
+    case 'USER':
       return {
         ...state,
         isLoggin: true,
@@ -21,10 +21,10 @@ const userReduser = (state = initialState, action) => {
         isLoggin: false,
         user: {},
       };
-    case 'REGISTORE_ERROR':
+    case 'REGISTER_ERROR':
       return {
         ...state,
-        errorRegistore: true,
+        errorRegister: true,
       };
     case 'LOGIN_ERROR':
       return {
@@ -37,4 +37,4 @@ const userReduser = (state = initialState, action) => {
   }
 };
 
-export default userReduser;
+export default userReducer;

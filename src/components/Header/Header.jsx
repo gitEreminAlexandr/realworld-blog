@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import { logOutAction } from '../../store/action/action';
+import { LOG_OUT } from '../../store/action/userAction';
 
 import classes from './Header.module.scss';
 
@@ -66,13 +66,13 @@ Header.propTypes = {
   onLogOut: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({ userReduser }) => ({
-  isLogin: userReduser.isLoggin,
-  user: userReduser.user,
+const mapStateToProps = ({ userReducer }) => ({
+  isLogin: userReducer.isLoggin,
+  user: userReducer.user,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onLogOut: () => dispatch(logOutAction()),
+  onLogOut: () => dispatch(LOG_OUT()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

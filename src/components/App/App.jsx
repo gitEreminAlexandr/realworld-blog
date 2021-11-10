@@ -3,15 +3,15 @@ import { connect } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import { userCookieAction } from '../../store/action/action';
+import { GET_CURRENT_USER } from '../../store/action/userAction';
 
 import Header from '../Header';
 import Main from '../Main/Main';
 
-const App = ({ onUser }) => {
+const App = ({ userCookie }) => {
   useEffect(() => {
-    onUser();
-  }, [onUser]);
+    userCookie();
+  }, [userCookie]);
 
   return (
     <BrowserRouter>
@@ -22,11 +22,11 @@ const App = ({ onUser }) => {
 };
 
 App.propTypes = {
-  onUser: PropTypes.func.isRequired,
+  userCookie: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  onUser: () => dispatch(userCookieAction()),
+  userCookie: () => dispatch(GET_CURRENT_USER()),
 });
 
 export default connect(null, mapDispatchToProps)(App);

@@ -4,12 +4,11 @@ import { connect } from 'react-redux';
 import { useHistory, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import { postUserLogin } from '../../store/action/action';
+import { USER_LOGIN } from '../../store/action/userAction';
 
 import classes from './SignIn.module.scss';
 
 const SignIn = ({ onLogin, loggin, errorLoggin }) => {
-
   const { register, handleSubmit } = useForm();
 
   const history = useHistory();
@@ -19,8 +18,6 @@ const SignIn = ({ onLogin, loggin, errorLoggin }) => {
       history.push(`/articles`);
     }
   }, [history, loggin]);
-
-
 
   const onSubmitForm = (data) => {
     onLogin(JSON.stringify({ user: data }));
@@ -75,13 +72,13 @@ SignIn.propTypes = {
   errorLoggin: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = ({ userReduser }) => ({
-  loggin: userReduser.isLoggin,
-  errorLoggin: userReduser.errorLoggin,
+const mapStateToProps = ({ userReducer }) => ({
+  loggin: userReducer.isLoggin,
+  errorLoggin: userReducer.errorLoggin,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onLogin: (body) => dispatch(postUserLogin(body)),
+  onLogin: (body) => dispatch(USER_LOGIN(body)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

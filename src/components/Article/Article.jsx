@@ -7,15 +7,14 @@ import remarkGfm from 'remark-gfm';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 
-import { getBodyArticleAction, deleteArticleAction } from '../../store/action/action';
+import { GET_AN_ARTICLE, DELETE_ARTICLE } from '../../store/action/articlesAction';
 import SpinerIndicator from '../SpinnerIndicator';
 import ErrorIndicator from '../ErrorIndicator';
 
 import Question from '../../img/Question-mark.svg';
 import classes from './Article.module.scss';
 
-const Article = ({ article, slug, onGetArticle, loanding, errorIndicator, user, onDeleteArticleAction }) => {
-  
+const Article = ({ article, slug, getAnArticle, loanding, errorIndicator, user, deleteArticle }) => {
   const [modalDeleteArticle, setModalDeleteArticle] = useState(false);
   const openModal = () => setModalDeleteArticle(true);
   const closeModal = () => setModalDeleteArticle(false);
@@ -23,9 +22,9 @@ const Article = ({ article, slug, onGetArticle, loanding, errorIndicator, user, 
   const history = useHistory();
 
   useEffect(() => {
-    onGetArticle(slug);
-  }, [onGetArticle, slug]);
-  
+    getAnArticle(slug);
+  }, [getAnArticle, slug]);
+
   if (loanding) {
     return <SpinerIndicator />;
   }
@@ -35,9 +34,9 @@ const Article = ({ article, slug, onGetArticle, loanding, errorIndicator, user, 
   }
 
   const articleDelete = (slugArticle) => {
-    onDeleteArticleAction(slugArticle);
+    deleteArticle(slugArticle);
     history.push(`/articles/`);
-  }
+  };
 
   const { author, body, createdAt, description, tagList, title, UserEmail } = article;
 
@@ -87,7 +86,11 @@ const Article = ({ article, slug, onGetArticle, loanding, errorIndicator, user, 
                   <button type="button" className={classes['modal__action--no-delete']} onClick={closeModal}>
                     No
                   </button>
-                  <button type="button" className={classes['modal__action--yes-delete']} onClick={() => articleDelete(slug)}>
+                  <button
+                    type="button"
+                    className={classes['modal__action--yes-delete']}
+                    onClick={() => articleDelete(slug)}
+                  >
                     Yes
                   </button>
                 </div>
@@ -111,23 +114,23 @@ const Article = ({ article, slug, onGetArticle, loanding, errorIndicator, user, 
 Article.propTypes = {
   article: PropTypes.instanceOf(Object).isRequired,
   slug: PropTypes.string.isRequired,
-  onGetArticle: PropTypes.func.isRequired,
+  getAnArticle: PropTypes.func.isRequired,
   loanding: PropTypes.bool.isRequired,
   errorIndicator: PropTypes.bool.isRequired,
   user: PropTypes.string.isRequired,
-  onDeleteArticleAction: PropTypes.func.isRequired,
+  deleteArticle: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({ articlesReduse, indicatorReduse, userReduser }) => ({
-  article: articlesReduse.article,
-  loanding: indicatorReduse.spinner,
-  errorIndicator: indicatorReduse.error,
-  user: userReduser.user.email || 'null',
+const mapStateToProps = ({ articlesReducer, indicatorReducer, userReducer }) => ({
+  article: articlesReducer.article,
+  loanding: indicatorReducer.spinner,
+  errorIndicator: indicatorReducer.error,
+  user: userReducer.user.email || 'null',
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onGetArticle: (slug) => dispatch(getBodyArticleAction(slug)),
-  onDeleteArticleAction: (slug) => dispatch(deleteArticleAction(slug))
+  getAnArticle: (slug) => dispatch(GET_AN_ARTICLE(slug)),
+  deleteArticle: (slug) => dispatch(DELETE_ARTICLE(slug)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Article);

@@ -8,7 +8,6 @@ import { useHistory } from 'react-router-dom';
 import classes from './EditArticle.module.scss';
 
 const EditArticle = ({ article, user }) => {
-
   const { tagList, UserEmail, slug } = article;
   const [saveTags] = useState(tagList);
 
@@ -24,13 +23,15 @@ const EditArticle = ({ article, user }) => {
 
   const onSubmitNewArticle = (form) => {
     // eslint-disable-next-line no-alert
-    alert(JSON.stringify({
-      article: {
-        ...form,
-        tagList: saveTags,
-      },
-    }))
-    history.push(`/articles/${slug}`)
+    alert(
+      JSON.stringify({
+        article: {
+          ...form,
+          tagList: saveTags,
+        },
+      })
+    );
+    history.push(`/articles/${slug}`);
   };
 
   if (UserEmail !== user) {
@@ -94,9 +95,9 @@ EditArticle.propTypes = {
   user: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = ({ articlesReduse, userReduser }) => ({
-  article: articlesReduse.article,
-  user: userReduser.user.email,
+const mapStateToProps = ({ articlesReducer, userReducer }) => ({
+  article: articlesReducer.article,
+  user: userReducer.user.email,
 });
 
 export default connect(mapStateToProps, null)(EditArticle);

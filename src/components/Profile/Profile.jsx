@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 import classes from './Profile.module.scss';
 
 const Profile = ({ user }) => {
-  
   const {
     register,
     handleSubmit,
@@ -92,9 +91,9 @@ Profile.propTypes = {
   user: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
-const mapStateToProps = ({ userReduser }) => ({
-  isLogin: userReduser.isLoggin,
-  user: userReduser.user,
+const mapStateToProps = ({ userReducer }) => ({
+  isLogin: userReducer.isLoggin,
+  user: userReducer.user,
 });
 
 export default connect(mapStateToProps)(Profile);

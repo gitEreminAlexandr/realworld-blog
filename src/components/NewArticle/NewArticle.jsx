@@ -5,12 +5,11 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 
-import { newArticleAction, loandingArticle } from '../../store/action/action';
+import { NEW_ARTICLE, LOADING_ARTICLE } from '../../store/action/articlesAction';
 
 import classes from './NewArticle.module.scss';
 
-const NewArticle = ({ onNewArticle, article, loadingArticleValue, onLoandingArticle }) => {
-
+const NewArticle = ({ newArticle, article, loadingArticleValue, loandingArticle }) => {
   const [saveTags, setSaveTags] = useState([]);
   const inputTag = useRef();
 
@@ -20,9 +19,9 @@ const NewArticle = ({ onNewArticle, article, loadingArticleValue, onLoandingArti
   useEffect(() => {
     if (loadingArticleValue) {
       history.push(`/articles/${article.slug}`);
-      onLoandingArticle(false);
+      loandingArticle(false);
     }
-  }, [article.slug, history, loadingArticleValue, onLoandingArticle]);
+  }, [article.slug, history, loadingArticleValue, loandingArticle]);
 
   const deleteTag = (tagTitle) => {
     setSaveTags((tag) => tag.filter((item) => item.titleTag !== tagTitle));
@@ -39,7 +38,7 @@ const NewArticle = ({ onNewArticle, article, loadingArticleValue, onLoandingArti
   };
 
   const onSubmitNewArticle = (form) => {
-    onNewArticle(
+    newArticle(
       JSON.stringify({
         article: {
           ...form,
@@ -113,20 +112,20 @@ const NewArticle = ({ onNewArticle, article, loadingArticleValue, onLoandingArti
 };
 
 NewArticle.propTypes = {
-  onNewArticle: PropTypes.func.isRequired,
+  newArticle: PropTypes.func.isRequired,
   article: PropTypes.instanceOf(Object).isRequired,
   loadingArticleValue: PropTypes.bool.isRequired,
-  onLoandingArticle: PropTypes.func.isRequired,
+  loandingArticle: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({ articlesReduse }) => ({
-  article: articlesReduse.article,
-  loadingArticleValue: articlesReduse.loading,
+const mapStateToProps = ({ articlesReducer }) => ({
+  article: articlesReducer.article,
+  loadingArticleValue: articlesReducer.loading,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onNewArticle: (body) => dispatch(newArticleAction(body)),
-  onLoandingArticle: (value) => dispatch(loandingArticle(value)),
+  newArticle: (body) => dispatch(NEW_ARTICLE(body)),
+  loandingArticle: (value) => dispatch(LOADING_ARTICLE(value)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewArticle);

@@ -4,12 +4,11 @@ import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { postUserRegistore } from '../../store/action/action';
+import { USER_REGISTER } from '../../store/action/userAction';
 
 import classes from './SignUp.module.scss';
 
-const SignUp = ({ onRegister, errorRegistore, loggin }) => {
-
+const SignUp = ({ userRegister, errorRegister, loggin }) => {
   const {
     register,
     handleSubmit,
@@ -28,13 +27,13 @@ const SignUp = ({ onRegister, errorRegistore, loggin }) => {
 
   const onSubmitForm = (data) => {
     const { repPassword, ...items } = data;
-    onRegister(JSON.stringify({ user: items }));
+    userRegister(JSON.stringify({ user: items }));
   };
 
   return (
     <div className={classes['sign-up']}>
       <h3 className={classes['sign-up__title']}>Create new account</h3>
-      {errorRegistore && <p className={classes.errors__login}>such mail or name already exists</p>}
+      {errorRegister && <p className={classes.errors__login}>User aldready exists with this email id</p>}
       <form className={classes['sign-up__form']} onSubmit={handleSubmit((form) => onSubmitForm(form))}>
         <label className={classes['sign-up__name']}>
           <p className={classes['sign-up__name--title']}>Username</p>
@@ -116,18 +115,18 @@ const SignUp = ({ onRegister, errorRegistore, loggin }) => {
 };
 
 SignUp.propTypes = {
-  onRegister: PropTypes.func.isRequired,
-  errorRegistore: PropTypes.bool.isRequired,
+  userRegister: PropTypes.func.isRequired,
+  errorRegister: PropTypes.bool.isRequired,
   loggin: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = ({ userReduser }) => ({
-  loggin: userReduser.isLoggin,
-  errorRegistore: userReduser.errorRegistore,
+const mapStateToProps = ({ userReducer }) => ({
+  loggin: userReducer.isLoggin,
+  errorRegister: userReducer.errorRegister,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onRegister: (body) => dispatch(postUserRegistore(body)),
+  userRegister: (body) => dispatch(USER_REGISTER(body)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

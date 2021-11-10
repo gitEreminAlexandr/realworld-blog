@@ -1,10 +1,18 @@
 const initialState = {
   globalArticle: [],
-  article: {author: undefined, body: undefined, createdAt: undefined, description: undefined, tagList: undefined, title: undefined, UserEmail: undefined},
+  article: {
+    author: undefined,
+    body: undefined,
+    createdAt: undefined,
+    description: undefined,
+    tagList: undefined,
+    title: undefined,
+    UserEmail: undefined,
+  },
   loading: false,
 };
 
-const articlesReduse = (state = initialState, action) => {
+const articlesReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'GLOBAL_ARTICLES':
       return {
@@ -16,12 +24,12 @@ const articlesReduse = (state = initialState, action) => {
         ...state,
         article: action.payload,
       };
-    case 'DELETE_ARTICLE': 
+    case 'DELETE_ARTICLE':
       return {
         ...state,
-        article: {}
-      }
-    case 'LOANDING__ARTICLE':
+        article: {},
+      };
+    case 'LOADING_ARTICLE':
       return {
         ...state,
         loading: action.payload,
@@ -31,4 +39,4 @@ const articlesReduse = (state = initialState, action) => {
   }
 };
 
-export default articlesReduse;
+export default articlesReducer;

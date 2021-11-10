@@ -3,9 +3,9 @@ const initialState = {
   error: false,
 };
 
-const indicatorReduse = (state = initialState, action) => {
+const indicatorReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'LOANDING':
+    case 'LOADING_SPINNER':
       return {
         ...state,
         spinner: action.payload,
@@ -21,4 +21,4 @@ const indicatorReduse = (state = initialState, action) => {
   }
 };
 
-export default indicatorReduse;
+export default indicatorReducer;

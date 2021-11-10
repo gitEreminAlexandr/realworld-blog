@@ -3,12 +3,12 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { getArticlesAction, loandingIndicator } from '../../store/action/action';
+import { ARTICLES_GLOBALLY } from '../../store/action/articlesAction';
+import { LOADING_SPINNER } from '../../store/action/indicatorAction';
 
 import classes from './Pagination.module.scss';
 
-function Pagination({ onGetGlobalArticles, onLoandingIndicator }) {
-  
+function Pagination({ articlesGlobally, loadingSpinner }) {
   const [pages] = useState([
     { count: 1, offset: 0 },
     { count: 2, offset: 5 },
@@ -33,25 +33,25 @@ function Pagination({ onGetGlobalArticles, onLoandingIndicator }) {
 
   const pageIt = () => {
     if (pagesActive !== pages[0].count) {
-      onLoandingIndicator(true);
-      onGetGlobalArticles(pages[pagesActive - 2].offset);
+      loadingSpinner(true);
+      articlesGlobally(pages[pagesActive - 2].offset);
       setPagesActive((page) => page - 1);
     }
   };
 
   const pageGt = () => {
     if (pages.length !== pagesActive) {
-      onLoandingIndicator(true);
-      onGetGlobalArticles(pages[pagesActive].offset);
+      loadingSpinner(true);
+      articlesGlobally(pages[pagesActive].offset);
       setPagesActive((page) => page + 1);
     }
   };
 
   const page = (count, offset) => {
     if (pagesActive !== count) {
-      onLoandingIndicator(true);
+      loadingSpinner(true);
       setPagesActive(count);
-      onGetGlobalArticles(offset);
+      articlesGlobally(offset);
     }
   };
 
@@ -73,13 +73,13 @@ function Pagination({ onGetGlobalArticles, onLoandingIndicator }) {
 }
 
 Pagination.propTypes = {
-  onGetGlobalArticles: PropTypes.func.isRequired,
-  onLoandingIndicator: PropTypes.func.isRequired,
+  articlesGlobally: PropTypes.func.isRequired,
+  loadingSpinner: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  onGetGlobalArticles: (offset) => dispatch(getArticlesAction(offset)),
-  onLoandingIndicator: (value) => dispatch(loandingIndicator(value))
+  articlesGlobally: (offset) => dispatch(ARTICLES_GLOBALLY(offset)),
+  loadingSpinner: (value) => dispatch(LOADING_SPINNER(value)),
 });
 
 export default connect(null, mapDispatchToProps)(Pagination);
