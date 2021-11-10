@@ -1,14 +1,18 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
 
 import { USER_LOGIN } from '../../store/action/userAction';
 
 import classes from './SignIn.module.scss';
 
-const SignIn = ({ onLogin, loggin, errorLoggin }) => {
+const SignIn = () => {
+
+  const loggin = useSelector(({userReducer}) => userReducer.isLoggin);
+  const errorLoggin = useSelector(({userReducer}) => userReducer.errorLoggin);
+  const dispatch = useDispatch();
+
   const { register, handleSubmit } = useForm();
 
   const history = useHistory();
@@ -20,7 +24,7 @@ const SignIn = ({ onLogin, loggin, errorLoggin }) => {
   }, [history, loggin]);
 
   const onSubmitForm = (data) => {
-    onLogin(JSON.stringify({ user: data }));
+    dispatch(USER_LOGIN(JSON.stringify({ user: data })));
   };
 
   return (
@@ -66,19 +70,4 @@ const SignIn = ({ onLogin, loggin, errorLoggin }) => {
   );
 };
 
-SignIn.propTypes = {
-  onLogin: PropTypes.func.isRequired,
-  loggin: PropTypes.bool.isRequired,
-  errorLoggin: PropTypes.bool.isRequired,
-};
-
-const mapStateToProps = ({ userReducer }) => ({
-  loggin: userReducer.isLoggin,
-  errorLoggin: userReducer.errorLoggin,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onLogin: (body) => dispatch(USER_LOGIN(body)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
+export default SignIn;

@@ -1,28 +1,33 @@
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { format } from 'date-fns';
-import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
-
-import Pagination from '../Pagination/Pagination';
-import SpinnerIndicator from '../SpinnerIndicator';
 
 import { ARTICLES_GLOBALLY } from '../../store/action/articlesAction';
 import { LOADING_SPINNER } from '../../store/action/indicatorAction';
 
+import Pagination from '../Pagination/Pagination';
+import SpinnerIndicator from '../SpinnerIndicator';
+
 import classes from './ListArticle.module.scss';
 
-const ListArticle = ({ globalArticle, articlesGlobally, loadingSpinner, loanding }) => {
+const ListArticle = () => {
+
+  const globalArticle = useSelector(({articlesReducer}) => articlesReducer.globalArticle);
+  const loanding = useSelector(({indicatorReducer}) => indicatorReducer.spinner);
+
+  const dispatch = useDispatch();
+
   const history = useHistory();
 
   const openArticle = (slug) => {
-    loadingSpinner(true);
+    dispatch(LOADING_SPINNER(true));
     history.push(`/articles/${slug}`);
   };
 
   useEffect(() => {
-    articlesGlobally(0);
-  }, [articlesGlobally]);
+    dispatch(ARTICLES_GLOBALLY(0));
+  }, [dispatch]);
 
   return (
     <div className={classes['list-article']}>
@@ -81,21 +86,4 @@ const ListArticle = ({ globalArticle, articlesGlobally, loadingSpinner, loanding
   );
 };
 
-ListArticle.propTypes = {
-  globalArticle: PropTypes.arrayOf(PropTypes.object).isRequired,
-  articlesGlobally: PropTypes.func.isRequired,
-  loadingSpinner: PropTypes.func.isRequired,
-  loanding: PropTypes.bool.isRequired,
-};
-
-const mapStateToProps = ({ articlesReducer, indicatorReducer }) => ({
-  globalArticle: articlesReducer.globalArticle,
-  loanding: indicatorReducer.spinner,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  articlesGlobally: (offset) => dispatch(ARTICLES_GLOBALLY(offset)),
-  loadingSpinner: (value) => dispatch(LOADING_SPINNER(value)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(ListArticle);
+export default ListArticle;

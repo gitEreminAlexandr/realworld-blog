@@ -1,30 +1,36 @@
 import React, { useState, useRef, useEffect } from 'react';
 import uniqid from 'uniqid';
 import { useForm } from 'react-hook-form';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import { NEW_ARTICLE, LOADING_ARTICLE } from '../../store/action/articlesAction';
 
 import classes from './NewArticle.module.scss';
 
-const NewArticle = ({ newArticle, article, loadingArticleValue, loandingArticle }) => {
+const NewArticle = () => {
+
+  const article = useSelector(({articlesReducer}) => articlesReducer.article);
+  const loadingArticleValue = useSelector(({articlesReducer}) => articlesReducer.loading);
+
+  const dispatch = useDispatch();
+
   const [saveTags, setSaveTags] = useState([]);
   const inputTag = useRef();
 
-  const { register, handleSubmit } = useForm();
   const history = useHistory();
+
+  const { register, handleSubmit } = useForm();
 
   useEffect(() => {
     if (loadingArticleValue) {
       history.push(`/articles/${article.slug}`);
-      loandingArticle(false);
+      dispatch(LOADING_ARTICLE(false));
     }
-  }, [article.slug, history, loadingArticleValue, loandingArticle]);
+  }, [article.slug, dispatch, history, loadingArticleValue]);
 
-  const deleteTag = (tagTitle) => {
-    setSaveTags((tag) => tag.filter((item) => item.titleTag !== tagTitle));
+  const deleteTag = (tagKey) => {
+    setSaveTags((tag) => tag.filter((item) => item.keyTag !== tagKey));
   };
 
   const deleteLastTag = () => {
@@ -38,14 +44,14 @@ const NewArticle = ({ newArticle, article, loadingArticleValue, loandingArticle 
   };
 
   const onSubmitNewArticle = (form) => {
-    newArticle(
+    dispatch(NEW_ARTICLE(
       JSON.stringify({
         article: {
           ...form,
           tagList: saveTags.map((item) => item.titleTag),
         },
       })
-    );
+    ));
   };
 
   return (
@@ -87,7 +93,7 @@ const NewArticle = ({ newArticle, article, loadingArticleValue, loandingArticle 
                   placeholder="Tags"
                   defaultValue={titleTag}
                 />
-                <button className={classes['form__tags--delete']} type="button" onClick={() => deleteTag(titleTag)}>
+                <button className={classes['form__tags--delete']} type="button" onClick={() => deleteTag(keyTag)}>
                   Delete
                 </button>
               </div>
@@ -111,21 +117,4 @@ const NewArticle = ({ newArticle, article, loadingArticleValue, loandingArticle 
   );
 };
 
-NewArticle.propTypes = {
-  newArticle: PropTypes.func.isRequired,
-  article: PropTypes.instanceOf(Object).isRequired,
-  loadingArticleValue: PropTypes.bool.isRequired,
-  loandingArticle: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = ({ articlesReducer }) => ({
-  article: articlesReducer.article,
-  loadingArticleValue: articlesReducer.loading,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  newArticle: (body) => dispatch(NEW_ARTICLE(body)),
-  loandingArticle: (value) => dispatch(LOADING_ARTICLE(value)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(NewArticle);
+export default NewArticle;

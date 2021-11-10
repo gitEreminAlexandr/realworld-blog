@@ -1,11 +1,13 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
 import classes from './Profile.module.scss';
 
-const Profile = ({ user }) => {
+const Profile = () => {
+
+  const user = useSelector(({userReducer}) => userReducer.user);
+
   const {
     register,
     handleSubmit,
@@ -86,14 +88,4 @@ const Profile = ({ user }) => {
   );
 };
 
-Profile.propTypes = {
-  isLogin: PropTypes.bool.isRequired,
-  user: PropTypes.objectOf(PropTypes.any).isRequired,
-};
-
-const mapStateToProps = ({ userReducer }) => ({
-  isLogin: userReducer.isLoggin,
-  user: userReducer.user,
-});
-
-export default connect(mapStateToProps)(Profile);
+export default Profile;

@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import uniqid from 'uniqid';
 import { useHistory } from 'react-router-dom';
 
 import classes from './EditArticle.module.scss';
 
-const EditArticle = ({ article, user }) => {
+const EditArticle = () => {
+  const article = useSelector(({ articlesReducer }) => articlesReducer.article);
+  const user = useSelector(({ userReducer }) => userReducer.user.email);
+
   const { tagList, UserEmail, slug } = article;
   const [saveTags] = useState(tagList);
 
@@ -90,14 +92,4 @@ const EditArticle = ({ article, user }) => {
   );
 };
 
-EditArticle.propTypes = {
-  article: PropTypes.instanceOf(Object).isRequired,
-  user: PropTypes.string.isRequired,
-};
-
-const mapStateToProps = ({ articlesReducer, userReducer }) => ({
-  article: articlesReducer.article,
-  user: userReducer.user.email,
-});
-
-export default connect(mapStateToProps, null)(EditArticle);
+export default EditArticle;

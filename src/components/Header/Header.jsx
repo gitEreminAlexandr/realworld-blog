@@ -1,78 +1,68 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
 
 import { LOG_OUT } from '../../store/action/userAction';
 
 import classes from './Header.module.scss';
 
-const Header = ({ isLogin, user, onLogOut }) => (
-  <header className={classes.header}>
-    <h1 className={classes.header__title}>
-      <Link to="/">Realworld Blog</Link>
-    </h1>
-    <ul className={classes.header__nav}>
-      {isLogin ? (
-        <>
-          <li className={classes['header__nav--create-article']}>
-            <Link to="/new-article">Create article</Link>
-          </li>
-          <li className={classes['header__nav--profile']}>
-            <Link to="/profile">
-              <p>{user.username}</p>
-              {user.image === null ? (
-                <img
-                  className={classes['list-article__aftor--img']}
-                  src="https://www.clipartmax.com/png/full/216-2165089_avatar-businessperson.png"
-                  alt="avatar"
-                  width={46}
-                  height={46}
-                />
-              ) : (
-                <img
-                  className={classes['list-article__aftor--img']}
-                  src={user.image}
-                  alt="avatar"
-                  width={46}
-                  height={46}
-                />
-              )}
-            </Link>
-          </li>
-          <li className={classes['header__nav--log-out']}>
-            <button type="button" onClick={() => onLogOut()}>
-              Log Out
-            </button>
-          </li>
-        </>
-      ) : (
-        <>
-          <li className={classes['header__nav--sign-in']}>
-            <Link to="/sign-in">Sign in</Link>
-          </li>
-          <li className={classes['header__nav--sign-up']}>
-            <Link to="/sign-up">Sign Up</Link>
-          </li>
-        </>
-      )}
-    </ul>
-  </header>
-);
+const Header = () => {
+  const dispatch = useDispatch();
+  const login = useSelector(({ userReducer }) => userReducer.isLoggin);
+  const user = useSelector(({ userReducer }) => userReducer.user);
 
-Header.propTypes = {
-  isLogin: PropTypes.bool.isRequired,
-  user: PropTypes.objectOf(PropTypes.any).isRequired,
-  onLogOut: PropTypes.func.isRequired,
+  return (
+    <header className={classes.header}>
+      <h1 className={classes.header__title}>
+        <Link to="/">Realworld Blog</Link>
+      </h1>
+      <ul className={classes.header__nav}>
+        {login ? (
+          <>
+            <li className={classes['header__nav--create-article']}>
+              <Link to="/new-article">Create article</Link>
+            </li>
+            <li className={classes['header__nav--profile']}>
+              <Link to="/profile">
+                <p>{user.username}</p>
+                {user.image === null ? (
+                  <img
+                    className={classes['list-article__aftor--img']}
+                    src="https://www.clipartmax.com/png/full/216-2165089_avatar-businessperson.png"
+                    alt="avatar"
+                    width={46}
+                    height={46}
+                  />
+                ) : (
+                  <img
+                    className={classes['list-article__aftor--img']}
+                    src={user.image}
+                    alt="avatar"
+                    width={46}
+                    height={46}
+                  />
+                )}
+              </Link>
+            </li>
+            <li className={classes['header__nav--log-out']}>
+              <button type="button" onClick={() => dispatch(LOG_OUT())}>
+                Log Out
+              </button>
+            </li>
+          </>
+        ) : (
+          <>
+            <li className={classes['header__nav--sign-in']}>
+              <Link to="/sign-in">Sign in</Link>
+            </li>
+            <li className={classes['header__nav--sign-up']}>
+              <Link to="/sign-up">Sign Up</Link>
+            </li>
+          </>
+        )}
+      </ul>
+    </header>
+  );
 };
 
-const mapStateToProps = ({ userReducer }) => ({
-  isLogin: userReducer.isLoggin,
-  user: userReducer.user,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onLogOut: () => dispatch(LOG_OUT()),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default Header;

@@ -1,14 +1,19 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { USER_REGISTER } from '../../store/action/userAction';
 
 import classes from './SignUp.module.scss';
 
-const SignUp = ({ userRegister, errorRegister, loggin }) => {
+const SignUp = () => {
+
+  const loggin = useSelector(({userReducer}) => userReducer.isLoggin);
+  const errorRegister = useSelector(({userReducer}) => userReducer.errorRegister);
+
+  const dispatch = useDispatch();
+
   const {
     register,
     handleSubmit,
@@ -27,7 +32,7 @@ const SignUp = ({ userRegister, errorRegister, loggin }) => {
 
   const onSubmitForm = (data) => {
     const { repPassword, ...items } = data;
-    userRegister(JSON.stringify({ user: items }));
+    dispatch(USER_REGISTER(JSON.stringify({ user: items })));
   };
 
   return (
@@ -114,19 +119,4 @@ const SignUp = ({ userRegister, errorRegister, loggin }) => {
   );
 };
 
-SignUp.propTypes = {
-  userRegister: PropTypes.func.isRequired,
-  errorRegister: PropTypes.bool.isRequired,
-  loggin: PropTypes.bool.isRequired,
-};
-
-const mapStateToProps = ({ userReducer }) => ({
-  loggin: userReducer.isLoggin,
-  errorRegister: userReducer.errorRegister,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  userRegister: (body) => dispatch(USER_REGISTER(body)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(SignUp);
+export default SignUp;

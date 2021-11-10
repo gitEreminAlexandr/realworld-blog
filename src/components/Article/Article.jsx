@@ -1,6 +1,6 @@
 /* eslint-disable react/no-children-prop */
 import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { format } from 'date-fns';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -14,16 +14,21 @@ import ErrorIndicator from '../ErrorIndicator';
 import Question from '../../img/Question-mark.svg';
 import classes from './Article.module.scss';
 
-const Article = ({ article, slug, getAnArticle, loanding, errorIndicator, user, deleteArticle }) => {
+const Article = ({ slug }) => {
   const [modalDeleteArticle, setModalDeleteArticle] = useState(false);
-  const openModal = () => setModalDeleteArticle(true);
-  const closeModal = () => setModalDeleteArticle(false);
+
+  const dispatch = useDispatch();
+
+  const article = useSelector(({ articlesReducer }) => articlesReducer.article);
+  const loanding = useSelector(({ indicatorReducer }) => indicatorReducer.spinner);
+  const errorIndicator = useSelector(({ indicatorReducer }) => indicatorReducer.error);
+  const user = useSelector(({ userReducer }) => userReducer.user.email || 'null');
 
   const history = useHistory();
 
   useEffect(() => {
-    getAnArticle(slug);
-  }, [getAnArticle, slug]);
+    dispatch(GET_AN_ARTICLE(slug));
+  }, [dispatch, slug]);
 
   if (loanding) {
     return <SpinerIndicator />;
@@ -33,8 +38,11 @@ const Article = ({ article, slug, getAnArticle, loanding, errorIndicator, user, 
     return <ErrorIndicator />;
   }
 
+  const openModal = () => setModalDeleteArticle(true);
+  const closeModal = () => setModalDeleteArticle(false);
+
   const articleDelete = (slugArticle) => {
-    deleteArticle(slugArticle);
+    dispatch(DELETE_ARTICLE(slugArticle));
     history.push(`/articles/`);
   };
 
@@ -112,25 +120,7 @@ const Article = ({ article, slug, getAnArticle, loanding, errorIndicator, user, 
 };
 
 Article.propTypes = {
-  article: PropTypes.instanceOf(Object).isRequired,
   slug: PropTypes.string.isRequired,
-  getAnArticle: PropTypes.func.isRequired,
-  loanding: PropTypes.bool.isRequired,
-  errorIndicator: PropTypes.bool.isRequired,
-  user: PropTypes.string.isRequired,
-  deleteArticle: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({ articlesReducer, indicatorReducer, userReducer }) => ({
-  article: articlesReducer.article,
-  loanding: indicatorReducer.spinner,
-  errorIndicator: indicatorReducer.error,
-  user: userReducer.user.email || 'null',
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  getAnArticle: (slug) => dispatch(GET_AN_ARTICLE(slug)),
-  deleteArticle: (slug) => dispatch(DELETE_ARTICLE(slug)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Article);
+export default Article;
