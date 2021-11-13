@@ -53,7 +53,7 @@ const NewArticle = () => {
     );
   };
 
-  if (!logging) history.push(`/articles`);
+  if (!logging) history.push(`/sign-in`);
 
   return (
     <div className={classes['new-article']}>

@@ -30,7 +30,7 @@ const Profile = () => {
     },
   });
 
-  if (!logging) history.push(`/articles`);
+  if (!logging) history.push(`/sign-in`);
 
   const onSubmitForm = (data) => {
     // eslint-disable-next-line no-alert

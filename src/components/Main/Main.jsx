@@ -15,7 +15,7 @@ import classes from './Main.module.scss';
 const Main = () => (
   <main className={classes.main}>
     <Switch>
-      <Route path="/my-articles/" exact component={MyArticles} />
+      <Route path="/my-articles" exact component={MyArticles} />
       <Route path="/articles/" exact component={ListArticle} />
       <Route
         exact

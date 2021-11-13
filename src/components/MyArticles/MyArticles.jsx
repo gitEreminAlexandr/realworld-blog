@@ -25,8 +25,8 @@ const MyArticles = () => {
     history.push(`/articles/${slug}`);
   };
 
-  if (!logging) history.push(`/articles`);
-  if (globalArticle.length === 0) history.push(`/new-article`);
+  if (!logging) history.push(`/sign-in`);
+  if (logging && globalArticle.length === 0) history.push(`/new-article`);
 
   useEffect(() => {
     dispatch(myArticles(user.username));
