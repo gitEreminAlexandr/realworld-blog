@@ -1,18 +1,27 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import classNames from 'classnames';
 
-import { USER_REGISTER } from '../../store/action/userAction';
+import { userRegister } from '../../store/action/userAction';
 
 import classes from './SignUp.module.scss';
+import SignUpUserName from './SignUprName';
+import SignUpEmail from './SignUpEmail';
+import SignUpPassword from './SignUpPassword';
 
 const SignUp = () => {
-
-  const loggin = useSelector(({userReducer}) => userReducer.isLoggin);
-  const errorRegister = useSelector(({userReducer}) => userReducer.errorRegister);
-
   const dispatch = useDispatch();
+
+  const logging = useSelector(({ userReducer }) => userReducer.isLogging);
+  const errorRegister = useSelector(({ userReducer }) => userReducer.errorRegister);
+  const [submitActive, setSubmitActive] = useState(true);
+  const submitBtn = classNames(
+    submitActive ? classes.form__submit : classes['form__submit-no']
+  )
+
+  const history = useHistory();
 
   const {
     register,
@@ -22,98 +31,44 @@ const SignUp = () => {
   } = useForm();
   const password = watch('password');
 
-  const history = useHistory();
 
   useEffect(() => {
-    if (loggin) {
+    if (logging) {
       history.push(`/articles`);
     }
-  }, [history, loggin]);
+  }, [history, logging]);
 
   const onSubmitForm = (data) => {
     const { repPassword, ...items } = data;
-    dispatch(USER_REGISTER(JSON.stringify({ user: items })));
+    dispatch(userRegister(JSON.stringify({ user: items })));
   };
 
   return (
     <div className={classes['sign-up']}>
       <h3 className={classes['sign-up__title']}>Create new account</h3>
       {errorRegister && <p className={classes.errors__login}>User aldready exists with this email id</p>}
-      <form className={classes['sign-up__form']} onSubmit={handleSubmit((form) => onSubmitForm(form))}>
-        <label className={classes['sign-up__name']}>
-          <p className={classes['sign-up__name--title']}>Username</p>
-          <input
-            className={classes['sign-up__name--input']}
-            type="text"
-            placeholder="Username"
-            minLength={3}
-            required
-            {...register('username', {
-              validate: (value) => Number.isNaN(Number(value)) || 'The field must be letters',
-            })}
-          />
-          {errors.username && <p className={classes.errors__input}>{errors.username.message}</p>}
-        </label>
+      <form className={classes.form} onSubmit={handleSubmit((form) => onSubmitForm(form))}>
+        <SignUpUserName register={register} errors={errors} />
+        <SignUpEmail register={register} />
+        <SignUpPassword register={register} errors={errors} password={password}/>
 
-        <label className={classes['sign-up__email']}>
-          <p className={classes['sign-up__email--title']}>Email address</p>
-          <input
-            className={classes['sign-up__email--input']}
-            type="email"
-            placeholder="Email address"
-            required
-            {...register('email')}
-          />
-        </label>
+        <hr className={classes.hr} />
 
-        <label className={classes['sign-up__password']}>
-          <p className={classes['sign-up__password--title']}>Password</p>
-          <input
-            className={classes['sign-up__password--input']}
-            type="password"
-            placeholder="Password"
-            required
-            {...register('password', {
-              minLength: { value: 8, message: 'Your password needs to be at least 8 characters.' },
-              maxLength: { value: 40, message: 'Your password must be no more than 40 characters long.' },
-            })}
-          />
-          {errors.password && <p className={classes.errors__input}>{errors.password.message}</p>}
-        </label>
-
-        <label className={classes['sign-up__rep-password']}>
-          <p className={classes['sign-up__rep-password--title']}>Repeat Password</p>
-          <input
-            className={classes['sign-up__rep-password--input']}
-            type="password"
-            placeholder="Repeat Password"
-            {...register('repPassword', {
-              required: true,
-              minLength: { value: 8, message: 'Your password needs to be at least 8 characters.' },
-              maxLength: { value: 40, message: 'Your password must be no more than 40 characters long.' },
-              validate: (value) => value === password || 'Passwords must match',
-            })}
-          />
-          {errors.repPassword && <p className={classes.errors__input}>{errors.repPassword.message}</p>}
-        </label>
-
-        <hr className={classes['sign-up__hr']} />
-
-        <label className={classes['sign-up__agreement']}>
-          <input className={classes['sign-up__agreement--input']} type="checkbox" defaultChecked required />
-          <p className={classes['sign-up__agreement--title']}>I agree to the processing of my personal information</p>
+        <label className={classes.agreement}>
+          <input className={classes.agreement__input} type="checkbox" checked={submitActive} required onChange={() =>setSubmitActive(!submitActive)} />
+          <p className={classes.agreement__title}>I agree to the processing of my personal information</p>
           {errors.checkbox && <p className={classes.errors__input}>{errors.checkbox.message}</p>}
         </label>
-        <button className={classes['sign-up__form--submit']} type="submit">
+        <button className={submitBtn} type="submit">
           Create
         </button>
       </form>
 
-      <p className={classes['sign-up__footer']}>
+      <p className={classes.footer}>
         Already have an account?{' '}
-        <a className={classes['sign-up__footer--link']} href="#">
+        <Link className={classes.footer__link} to="/sign-in">
           Sign In.
-        </a>
+        </Link>
       </p>
     </div>
   );

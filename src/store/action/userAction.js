@@ -1,5 +1,5 @@
+import apiRealworld from '../../service/api';
 import { setCookie, deleteCookie, getCookie } from '../../utils/utils';
-import { userRegister, userLogin, getUserThroughToken } from '../../service/api';
 import { LOADING_SPINNER, ERROR_INDICATION } from './indicatorAction';
 
 export const USER = (body) => ({
@@ -15,30 +15,32 @@ export const LOGIN_ERROR = () => ({
   type: 'LOGIN_ERROR',
 });
 
-export const LOG_OUT = () => (dispatch) => {
+export const logOut = () => (dispatch) => {
   deleteCookie('token');
   dispatch({ type: 'LOG_OUT' });
 };
 
-export const GET_CURRENT_USER = () => (dispatch) => {
+export const getCurrentUser = () => (dispatch) => {
   const token = getCookie('token');
 
   if (token !== undefined) {
     dispatch(LOADING_SPINNER(true));
-    getUserThroughToken(token)
+    apiRealworld
+      .userByToken(token)
       .then(({ status, data }) => {
         if (status === 200) dispatch(USER(data.user));
         if (status === 401) deleteCookie('token');
       })
-      .then(() => dispatch(LOADING_SPINNER(false)));
+      .finally(() => dispatch(LOADING_SPINNER(false)));
   }
 };
 
-export const USER_REGISTER = (body) => (dispatch) => {
+export const userRegister = (body) => (dispatch) => {
   dispatch(LOADING_SPINNER(true));
-  userRegister(body)
+  apiRealworld
+    .userRegistration(body)
     .then(({ status, data }) => {
-      if (status === 200) {
+      if (status === 201) {
         const { token } = data.user;
         setCookie('token', token, { secure: true, 'max-age': 97200 });
         dispatch(USER(data.user));
@@ -47,13 +49,14 @@ export const USER_REGISTER = (body) => (dispatch) => {
         dispatch(REGISTER_ERROR());
       }
     })
-    .then(() => dispatch(LOADING_SPINNER(false)))
-    .catch(() => dispatch(ERROR_INDICATION()));
+    .catch(() => dispatch(ERROR_INDICATION()))
+    .finally(() => dispatch(LOADING_SPINNER(false)));
 };
 
-export const USER_LOGIN = (body) => (dispatch) => {
+export const userLogin = (body) => (dispatch) => {
   dispatch(LOADING_SPINNER(true));
-  userLogin(body)
+  apiRealworld
+    .userAuthorization(body)
     .then(({ status, data }) => {
       if (status === 200) {
         const { token } = data.user;
@@ -64,6 +67,6 @@ export const USER_LOGIN = (body) => (dispatch) => {
         dispatch(LOGIN_ERROR());
       }
     })
-    .then(() => dispatch(LOADING_SPINNER(false)))
-    .catch(() => dispatch(ERROR_INDICATION()));
+    .catch(() => dispatch(ERROR_INDICATION()))
+    .finally(() => dispatch(LOADING_SPINNER(false)));
 };

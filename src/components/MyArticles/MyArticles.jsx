@@ -3,18 +3,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import { format } from 'date-fns';
 import { useHistory } from 'react-router-dom';
 
-import { articlesGlobally } from '../../store/action/articlesAction';
+import { myArticles } from '../../store/action/articlesAction';
 import { LOADING_SPINNER } from '../../store/action/indicatorAction';
 
-import Pagination from '../Pagination/Pagination';
 import SpinnerIndicator from '../SpinnerIndicator';
 
-import classes from './ListArticle.module.scss';
+import classes from './MyArticles.module.scss';
 
-const ListArticle = () => {
+const MyArticles = () => {
   const dispatch = useDispatch();
 
   const globalArticle = useSelector(({ articlesReducer }) => articlesReducer.globalArticle);
+  const user = useSelector(({userReducer}) => userReducer.user);
+  const logging = useSelector(({userReducer}) => userReducer.isLogging);
   const loanding = useSelector(({ indicatorReducer }) => indicatorReducer.spinner);
 
   const history = useHistory();
@@ -23,10 +24,14 @@ const ListArticle = () => {
     dispatch(LOADING_SPINNER(true));
     history.push(`/articles/${slug}`);
   };
+  
+
+  if (!logging) history.push(`/articles`);
+  if(globalArticle.length === 0) history.push(`/new-article`);
 
   useEffect(() => {
-    dispatch(articlesGlobally(0));
-  }, [dispatch]);
+    dispatch(myArticles(user.username));
+  }, [dispatch, user.username]);
 
   return (
     <div className={classes.article}>
@@ -78,9 +83,8 @@ const ListArticle = () => {
           ))
         )}
       </ul>
-      <Pagination />
     </div>
   );
 };
 
-export default ListArticle;
+export default MyArticles;

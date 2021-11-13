@@ -1,5 +1,5 @@
 const initialState = {
-  isLoggin: false,
+  isLogging: false,
   user: {},
   errorRegister: false,
   errorLoggin: false,
@@ -10,7 +10,7 @@ const userReducer = (state = initialState, action) => {
     case 'USER':
       return {
         ...state,
-        isLoggin: true,
+        isLogging: true,
         user: action.payload,
         errorRegistore: false,
         errorLoggin: false,
@@ -18,7 +18,7 @@ const userReducer = (state = initialState, action) => {
     case 'LOG_OUT':
       return {
         ...state,
-        isLoggin: false,
+        isLogging: false,
         user: {},
       };
     case 'REGISTER_ERROR':

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
-import uniqid from 'uniqid';
 import { useHistory } from 'react-router-dom';
+import uniqid from 'uniqid';
 
 import classes from './EditArticle.module.scss';
 
@@ -42,39 +42,33 @@ const EditArticle = () => {
 
   return (
     <div className={classes['new-article']}>
-      <h2 className={classes['new-article--title']}>Edit article</h2>
+      <h2 className={classes['new-article__title']}>Edit article</h2>
       <form className={classes.form} onSubmit={handleSubmit((form) => onSubmitNewArticle(form))}>
-        <label className={classes.form__title}>
-          <p className={classes['form__title--name']}>Title</p>
-          <input
-            className={classes['form__title--input']}
-            type="text"
-            placeholder="Title"
-            required
-            {...register('title')}
-          />
+        <label className={classes.title}>
+          <p className={classes.title__name}>Title</p>
+          <input className={classes.title__input} type="text" placeholder="Title" required {...register('title')} />
         </label>
-        <label className={classes.form__discription}>
-          <p className={classes['form__discription--name']}>Short description</p>
+        <label className={classes.discription}>
+          <p className={classes.discription__name}>Short description</p>
           <input
-            className={classes['form__discription--input']}
+            className={classes.discription__input}
             type="text"
             placeholder="Short description"
             required
             {...register('description')}
           />
         </label>
-        <label className={classes.form__text}>
-          <p className={classes['form__text--name']}>Text</p>
-          <textarea className={classes['form__text--textarea']} placeholder="Text" required {...register('body')} />
+        <label className={classes.text}>
+          <p className={classes.text__name}>Text</p>
+          <textarea className={classes.text__textarea} placeholder="Text" required {...register('body')} />
         </label>
-        <p className={classes['form__tags--name']}>Tags</p>
+        <p>Tags</p>
         {saveTags.length > 0 && (
-          <div className={classes.form__saveTag}>
+          <div className={classes['tag-list']}>
             {saveTags.map((item) => (
-              <div key={uniqid()} className={classes['form__saveTag--item']}>
+              <div key={uniqid()} className={classes['tag-list__item']}>
                 <input
-                  className={classes['form__tags--input']}
+                  className={classes['tag-list__input']}
                   type="text"
                   placeholder="Tags"
                   defaultValue={item}
@@ -84,7 +78,7 @@ const EditArticle = () => {
             ))}
           </div>
         )}
-        <button className={classes['form--submit']} type="submit">
+        <button className={classes.form__submit} type="submit">
           Send
         </button>
       </form>

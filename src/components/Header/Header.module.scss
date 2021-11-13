@@ -11,57 +11,65 @@
   &__title {
     font-size: 18px;
   }
+}
 
-  &__nav {
+.nav {
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+
+  &__my-articles a {
+    color: #1d1ac4;
+    border: 1px solid #251ac4;
+    border-radius: 5px;
+    margin-right: 27px;
+    padding: 6px 10px;
+  }
+  
+  &__create-article a {
+    color: #52C41A;
+    border: 1px solid #52C41A;
+    border-radius: 5px;
+    margin-right: 27px;
+    padding: 6px 10px;
+  }
+
+  &__profile a {
+    width: 140px;
     display: flex;
     align-items: center;
-    font-size: 18px;
-    
-    &--create-article a {
-      color: #52C41A;
-      border: 1px solid #52C41A;
-      border-radius: 5px;
-      margin-right: 27px;
-      padding: 6px 10px;
-    }
+    justify-content: flex-end;
+    margin-right: 27px;
 
-    &--sign-in {
-      margin-right: 37px;
+    & p {
+      margin-right: 10px;
     }
+  }
 
-    &--profile a {
-      width: 140px;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      margin-right: 27px;
+  &__log-out button {
+    background: none;
+    cursor: pointer;
+    border: 1px solid rgba(0, 0, 0, 0.75);
+    border-radius: 5px;
+    width: 109px;
+    height: 51px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-      & p {
-        margin-right: 10px;
-      }
-    }
+  &__sign-in {
+    margin-right: 37px;
+  }
 
-    &--log-out button {
-      background: none;
-      cursor: pointer;
-      border: 1px solid rgba(0, 0, 0, 0.75);
-      border-radius: 5px;
-      width: 109px;
-      height: 51px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    &--sign-up a {
-      color: #52C41A;
-      border: 1px solid #52C41A;
-      border-radius: 5px;
-      width: 109px;
-      height: 51px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+  &__sign-up a {
+    color: #52C41A;
+    border: 1px solid #52C41A;
+    border-radius: 5px;
+    width: 109px;
+    height: 51px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }

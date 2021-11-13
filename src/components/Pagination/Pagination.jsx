@@ -2,13 +2,12 @@ import classNames from 'classnames';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { ARTICLES_GLOBALLY } from '../../store/action/articlesAction';
+import { articlesGlobally } from '../../store/action/articlesAction';
 import { LOADING_SPINNER } from '../../store/action/indicatorAction';
 
 import classes from './Pagination.module.scss';
 
-function Pagination() {
-
+const Pagination = () => {
   const dispatch = useDispatch();
 
   const [pages] = useState([
@@ -20,23 +19,22 @@ function Pagination() {
   ]);
   const [pagesActive, setPagesActive] = useState(1);
 
-  const pageActiveClassName = (count) =>
-    classNames(classes['pagination--count'], pagesActive === count ? classes['pagination--active'] : null);
+  const pageActiveClassName = (count) => classNames(classes.count, pagesActive === count && classes.active);
 
   const itClassName = classNames(
-    classes['pagination--lt'],
-    pages[0].count === pagesActive ? classes['pagination--lt-active'] : null
+    classes.pagination__lt,
+    pages[0].count === pagesActive && classes['pagination__lt-active']
   );
 
   const gtClassName = classNames(
-    classes['pagination--gt'],
-    pages.length === pagesActive ? classes['pagination--gt-active'] : null
+    classes.pagination__gt,
+    pages.length === pagesActive && classes['pagination__gt-active']
   );
 
-  const pageIt = () => {
+  const pageLt = () => {
     if (pagesActive !== pages[0].count) {
       dispatch(LOADING_SPINNER(true));
-      dispatch(ARTICLES_GLOBALLY(pages[pagesActive - 2].offset));
+      dispatch(articlesGlobally(pages[pagesActive - 2].offset));
       setPagesActive((page) => page - 1);
     }
   };
@@ -44,7 +42,7 @@ function Pagination() {
   const pageGt = () => {
     if (pages.length !== pagesActive) {
       dispatch(LOADING_SPINNER(true));
-      dispatch(ARTICLES_GLOBALLY(pages[pagesActive].offset));
+      dispatch(articlesGlobally(pages[pagesActive].offset));
       setPagesActive((page) => page + 1);
     }
   };
@@ -53,13 +51,13 @@ function Pagination() {
     if (pagesActive !== count) {
       dispatch(LOADING_SPINNER(true));
       setPagesActive(count);
-      dispatch(ARTICLES_GLOBALLY(offset));
+      dispatch(articlesGlobally(offset));
     }
   };
 
   return (
     <div className={classes.pagination}>
-      <button type="button" className={itClassName} onClick={() => pageIt()}>
+      <button type="button" className={itClassName} onClick={() => pageLt()}>
         &lt;
       </button>
       {pages.map(({ offset, count }) => (
@@ -72,6 +70,6 @@ function Pagination() {
       </button>
     </div>
   );
-}
+};
 
 export default Pagination;

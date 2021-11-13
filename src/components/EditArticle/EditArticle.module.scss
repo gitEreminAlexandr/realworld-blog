@@ -9,7 +9,7 @@
   flex-direction: column;
   align-items: center;
 
-  &--title {
+  &__title {
     font-size: 20px;
   }
 }
@@ -17,96 +17,70 @@
 .form {
   display: flex;
   flex-direction: column;
-  
-  &__title {
-    margin-bottom: 21px;
 
-    &--input {
-      width: 874px;
-      height: 40px;
-      border: 1px solid #D9D9D9;
-      border-radius: 4px;
-      padding: 0 12px;
-    }
-  }
-
-  &__discription {
-    margin-bottom: 21px;
-
-    &--input {
-      width: 874px;
-      height: 40px;
-      border: 1px solid #D9D9D9;
-      border-radius: 4px;
-      padding: 0 12px;
-    }
-  }
-
-  &__text {
-    margin-bottom: 21px;
-
-    &--textarea {
-      resize: none;
-      width: 874px;
-      height: 168px;
-      border: 1px solid #D9D9D9;
-      border-radius: 4px;
-      padding: 7px 12px;
-    }
-  }
-
-  &__tags {
-    margin-bottom: 21px;
-
-    &--input{
-      border: 1px solid #D9D9D9;
-      border-radius: 4px;
-      padding: 0 12px;
-      width: 300px;
-      height: 40px;
-      margin-right: 17px;
-    }
-
-    &--delete {
-      width: 118px;
-      height: 40px;
-      margin-right: 17px;
-      background-color: #FFFFFF;
-      color: #F5222D;
-      border: 1px solid #F5222D;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-
-    &--add {
-      width: 118px;
-      height: 40px;
-      margin-right: 17px;
-      background-color: #FFFFFF;
-      color: #1890FF;
-      border: 1px solid #1890FF;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-  }
-
-  &--submit {
+  &__submit {
     width: 319px;
     height: 40px;
+    margin-top: 20px;
     border: 1px solid #1890FF;
     border-radius: 4px;
     background-color: #1890FF;
     color: #FFFFFF;
     cursor: pointer;
   }
+}
 
-  &__saveTag {
-    display: flex;
-    flex-direction: column;
+.title {
+  margin-bottom: 21px;
 
-    &--item {
-      margin-bottom: 5px;
-      
-    }
+  &__input {
+    width: 874px;
+    height: 40px;
+    border: 1px solid #D9D9D9;
+    border-radius: 4px;
+    padding: 0 12px;
+  }
+}
+
+.discription {
+  margin-bottom: 21px;
+
+  &__input {
+    width: 874px;
+    height: 40px;
+    border: 1px solid #D9D9D9;
+    border-radius: 4px;
+    padding: 0 12px;
+  }
+}
+
+.text {
+  margin-bottom: 21px;
+
+  &__textarea {
+    resize: none;
+    width: 874px;
+    height: 168px;
+    border: 1px solid #D9D9D9;
+    border-radius: 4px;
+    padding: 7px 12px;
+  }
+}
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+
+  &__item {
+    margin-bottom: 5px;
+  }
+
+  &__input {
+    border: 1px solid #D9D9D9;
+    border-radius: 4px;
+    padding: 0 12px;
+    min-width: 118px;
+    min-height: 40px;
+    margin-right: 17px;
   }
 }

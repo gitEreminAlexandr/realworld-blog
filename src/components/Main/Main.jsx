@@ -1,6 +1,7 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
+import MyArticles from '../MyArticles';
 import ListArticle from '../ListArticle';
 import Article from '../Article';
 import SignUp from '../SignUp';
@@ -14,6 +15,7 @@ import classes from './Main.module.scss';
 const Main = () => (
   <main className={classes.main}>
     <Switch>
+      <Route path="/my-articles/" exact component={MyArticles} />
       <Route path="/articles/" exact component={ListArticle} />
       <Route
         exact

@@ -14,98 +14,45 @@
     font-size: 20px;
     margin-bottom: 21px;
   }
+}
 
-  &__name {
+.label {
 
-    &--title {
-    font-size: 14px;
-    }
-
-    &--input {
-      width: 320px;
-      height: 40px;
-      border-radius: 4px;
-      border: 1px solid #D9D9D9;
-      padding-left: 12px;
-      margin-bottom: 12px;
-      
-      &::placeholder {
-        font-size: 16px;
-      }
-    }
+  &__title {
+  font-size: 14px;
   }
 
-  &__email {
+  &__input {
+    width: 320px;
+    height: 40px;
+    border-radius: 4px;
+    border: 1px solid #D9D9D9;
+    padding-left: 12px;
+    margin-bottom: 12px;
     
-    &--title {
-    font-size: 14px;
-    }
-
-    &--input {
-      width: 320px;
-      height: 40px;
-      border-radius: 4px;
-      border: 1px solid #D9D9D9;
-      padding-left: 12px;
-      margin-bottom: 12px;
-
-      &::placeholder {
-        font-size: 16px;
-      }
-    }
-  }
-
-  &__password {
-    
-    &--title {
-    font-size: 14px;
-    }
-
-    &--input {
-      width: 320px;
-      height: 40px;
-      border-radius: 4px;
-      border: 1px solid #D9D9D9;
-      padding-left: 12px;
-      margin-bottom: 12px;
-
-      &::placeholder {
-        font-size: 16px;
-      }
-    }
-  }
-
-  &__avatar {
-    
-    &--title {
-    font-size: 14px;
-    }
-
-    &--input {
-      width: 320px;
-      height: 40px;
-      border-radius: 4px;
-      border: 1px solid #D9D9D9;
-      padding-left: 12px;
-      margin-bottom: 21px;
-
-      &::placeholder {
-        font-size: 16px;
-      }
-    }
-  }
-
-  &__form {
-    &--submit {
-      width: 319px;
-      height: 40px;
-      background-color: #1890FF;
-      color: #FFFFFF;
+    &::placeholder {
       font-size: 16px;
-      border: none;
-      border-radius: 4px;
-      margin-bottom: 8px;
-      cursor: pointer;
     }
   }
+}
+
+.form {
+  &__submit {
+    width: 319px;
+    height: 40px;
+    background-color: #1890FF;
+    color: #FFFFFF;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    margin-top: 20px;
+    margin-bottom: 8px;
+    cursor: pointer;
+  }
+}
+
+.errors {
+  font-size: 12px;
+  padding-left: 90px;
+  color: rgb(255, 0, 0);
 }

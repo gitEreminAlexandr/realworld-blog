@@ -1,13 +1,13 @@
 const initialState = {
   globalArticle: [],
   article: {
-    author: undefined,
-    body: undefined,
-    createdAt: undefined,
-    description: undefined,
-    tagList: undefined,
-    title: undefined,
-    UserEmail: undefined,
+    author: '',
+    body: '',
+    createdAt: '',
+    description: '',
+    tagList: '',
+    title: '',
+    UserEmail: '',
   },
   loading: false,
 };

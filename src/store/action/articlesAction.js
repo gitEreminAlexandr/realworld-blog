@@ -1,5 +1,5 @@
+import apiRealworld from '../../service/api';
 import { getCookie } from '../../utils/utils';
-import { getArticle, getArticles, postNewArticle, deleteArticle } from '../../service/api';
 import { LOADING_SPINNER, ERROR_INDICATION } from './indicatorAction';
 
 export const GLOBAL_ARTICLES = (article) => ({
@@ -17,8 +17,9 @@ export const LOADING_ARTICLE = (value) => ({
   payload: value,
 });
 
-export const ARTICLES_GLOBALLY = (offset) => (dispatch) => {
-  getArticles(offset)
+export const articlesGlobally = (offset) => (dispatch) => {
+  apiRealworld
+    .getGloballyArticles(offset)
     .then(({ status, data }) => {
       if (status === 200) {
         dispatch(GLOBAL_ARTICLES(data.articles));
@@ -27,11 +28,26 @@ export const ARTICLES_GLOBALLY = (offset) => (dispatch) => {
         dispatch(ERROR_INDICATION(false));
       }
     })
-    .then(() => dispatch(LOADING_SPINNER(false)));
+    .finally(() => dispatch(LOADING_SPINNER(false)));
 };
 
-export const GET_AN_ARTICLE = (slug) => (dispatch) => {
-  getArticle(slug)
+export const myArticles = (author) => (dispatch) => {
+  apiRealworld
+    .getMyArticles(author)
+    .then(({ status, data }) => {
+      if (status === 200) {
+        dispatch(GLOBAL_ARTICLES(data.articles));
+      }
+      if (status !== 200) {
+        dispatch(ERROR_INDICATION(false));
+      }
+    })
+    .finally(() => dispatch(LOADING_SPINNER(false)));
+};
+
+export const getArticle = (slug) => (dispatch) => {
+  apiRealworld
+    .getArticle(slug)
     .then(({ status, data }) => {
       if (status === 200) {
         dispatch(ARTICLE(data.article));
@@ -39,27 +55,29 @@ export const GET_AN_ARTICLE = (slug) => (dispatch) => {
       }
       if (status !== 200) dispatch(ERROR_INDICATION(true));
     })
-    .then(() => dispatch(LOADING_SPINNER(false)))
-    .catch(() => dispatch(ERROR_INDICATION(true)));
+    .catch(() => dispatch(ERROR_INDICATION(true)))
+    .finally(() => dispatch(LOADING_SPINNER(false)));
 };
 
-export const NEW_ARTICLE = (bodyData) => (dispatch) => {
+export const newArticle = (bodyData) => (dispatch) => {
   const token = getCookie('token');
 
-  postNewArticle(bodyData, token)
+  apiRealworld
+    .newArticle(bodyData, token)
     .then(({ status, data }) => {
       if (status === 201) {
         dispatch(ARTICLE(data.article));
       }
     })
-    .then(() => dispatch(LOADING_SPINNER(false)))
-    .then(() => dispatch(LOADING_ARTICLE(true)));
+    .then(() => dispatch(LOADING_ARTICLE(true)))
+    .finally(() => dispatch(LOADING_SPINNER(false)));
 };
 
-export const DELETE_ARTICLE = (slug) => (dispatch) => {
+export const deleteArticle = (slug) => (dispatch) => {
   const token = getCookie('token');
 
-  deleteArticle(slug, token)
+  apiRealworld
+    .deleteArticle(slug, token)
     .then(() => dispatch({ type: 'DELETE_ARTICLE' }))
-    .then(() => dispatch(LOADING_SPINNER(false)));
+    .finally(() => dispatch(LOADING_SPINNER(false)));
 };

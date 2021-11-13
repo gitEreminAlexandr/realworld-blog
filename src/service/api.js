@@ -1,105 +1,92 @@
-const url = 'https://conduit-api-realworld.herokuapp.com/api';
+export default class apiRealworld {
+  static url = 'https://conduit-api-realworld.herokuapp.com/api';
 
-const getRequest = async (urlGet) => {
-  try {
-    const request = await fetch(url + urlGet);
-    const body = await request.json();
-
-    return { status: request.status, data: body };
-  } catch (error) {
-    return error;
-  }
-};
-
-const postRequest = async (api, dataBody) => {
-  try {
-    const request = await fetch(url + api, {
-      method: 'POST',
-      headers: {
+  static getData = async (api, token = null) => {
+    try {
+      const headers = {
         'Content-Type': 'application/json',
-      },
-      body: dataBody,
-    });
-    const body = await request.json();
+      };
+      if (token) headers.Authorization = `Token ${token}`;
 
-    return { status: request.status, data: body };
-  } catch (error) {
-    return error;
-  }
-};
+      const request = await fetch(`${this.url}${api}`, { headers });
+      const body = await request.json();
 
-export const getUserThroughToken = async (token) => {
-  try {
-    const request = await fetch(`${url}/user`, {
-      headers: {
+      return { status: request.status, data: body };
+    } catch (error) {
+      return error;
+    }
+  };
+
+  static sendingData = async (api, dataBody = {}, token = null, method = 'POST') => {
+    try {
+      const headers = {
         'Content-Type': 'application/json',
-        Authorization: `Token ${token}`,
-      },
-    });
-    const body = await request.json();
+      };
+      if (token) headers.Authorization = `Token ${token}`;
 
-    return { status: request.status, data: body };
-  } catch (error) {
-    return error;
-  }
-};
+      const request = await fetch(`${this.url}${api}`, {
+        method,
+        headers,
+        body: dataBody,
+      });
 
-const postRequestIsToken = async (api, token, dataBody) => {
-  try {
-    const request = await fetch(url + api, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Token ${token}`,
-      },
-      body: dataBody,
-    });
-    const body = await request.json();
+      const body = await request.json();
 
-    return { status: request.status, data: body };
-  } catch (error) {
-    return error;
-  }
-};
+      return { status: request.status, data: body };
+    } catch (error) {
+      return error;
+    }
+  };
 
-export const deleteArticle = async (slug, token) => {
-  try {
-    const request = await fetch(`${url}/articles/${slug}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Token ${token}`,
-      },
-    });
-    const body = await request.json();
+  static userByToken = async (token) => {
+    const user = await this.getData('/user', token);
+    return user;
+  };
 
-    return { status: request.status, data: body };
-  } catch (error) {
-    return error;
-  }
-};
+  static userRegistration = async (dataBody) => {
+    const user = await this.sendingData('/users', dataBody);
+    return user;
+  };
 
-export const getArticles = async (offset = 0) => {
-  const arrArticles = await getRequest(`/articles?limit=5&offset=${offset}`);
-  return arrArticles;
-};
+  static userAuthorization = async (dataBody) => {
+    const user = await this.sendingData('/users/login', dataBody);
+    return user;
+  };
 
-export const getArticle = async (slugArticle) => {
-  const article = await getRequest(`/articles/${slugArticle}`);
-  return article;
-};
+  static getGloballyArticles = async (offset = 0) => {
+    const articles = await this.getData(`/articles?limit=5&offset=${offset}`);
+    return articles;
+  };
 
-export const userLogin = async (body) => {
-  const user = await postRequest(`/users/login`, body);
-  return user;
-};
+  static getMyArticles = async (author) => {
+    const articles = await this.getData(`/articles?author=${author}`);
+    return articles;
+  };
 
-export const userRegister = async (body) => {
-  const user = await postRequest(`/users`, body);
-  return user;
-};
+  static getArticle = async (slugArticle) => {
+    const article = await this.getData(`/articles/${slugArticle}`);
+    return article;
+  };
 
-export const postNewArticle = async (dataBody, token) => {
-  const newArticle = await postRequestIsToken(`/articles`, token, dataBody);
-  return newArticle;
-};
+  static newArticle = async (dataBody, token) => {
+    const newArticle = await this.sendingData(`/articles`, dataBody, token);
+    return newArticle;
+  };
+
+  static deleteArticle = async (slug, token) => {
+    try {
+      const request = await fetch(`${this.url}/articles/${slug}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Token ${token}`,
+        },
+      });
+      const body = await request.json();
+
+      return { status: request.status, data: body };
+    } catch (error) {
+      return error;
+    }
+  };
+}

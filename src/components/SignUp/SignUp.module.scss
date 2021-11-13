@@ -14,131 +14,81 @@
     font-size: 20px;
     margin-bottom: 21px;
   }
-
-  &__name {
-    display: inline-block;
-    margin-bottom: 12px;
-
-    &--title {
-    font-size: 14px;
-    }
-
-    &--input {
-      width: 320px;
-      height: 40px;
-      border-radius: 4px;
-      border: 1px solid #D9D9D9;
-      
-      &::placeholder {
-        font-size: 16px;
-      }
-    }
-  }
-
-  &__email {
-    display: inline-block;
-    margin-bottom: 12px;
-    
-    &--title {
-    font-size: 14px;
-    }
-
-    &--input {
-      width: 320px;
-      height: 40px;
-      border-radius: 4px;
-      border: 1px solid #D9D9D9;
-
-      &::placeholder {
-        font-size: 16px;
-      }
-    }
-  }
-
-  &__password {
-    display: inline-block;
-    margin-bottom: 12px;
-    
-    &--title {
-    font-size: 14px;
-    }
-
-    &--input {
-      width: 320px;
-      height: 40px;
-      border-radius: 4px;
-      border: 1px solid #D9D9D9;
-      
-
-      &::placeholder {
-        font-size: 16px;
-      }
-    }
-  }
-
-  &__rep-password {
-    display: inline-block;
-    margin-bottom: 12px;
-
-    &--title {
-    font-size: 14px;
-    }
-
-    &--input {
-      width: 320px;
-      height: 40px;
-      border-radius: 4px;
-      border: 1px solid #D9D9D9;
-
-      &::placeholder {
-        font-size: 16px;
-      }
-    }
-  }
-
-  &__hr {
-    color: #E8E8E8;
-    margin-bottom: 8px;
-  }
-
-  &__agreement {
-    display: flex;
-    cursor: pointer;
-    margin-bottom: 21px;
-
-    &--input {
-      width: 16px;
-      height: 16px;
-    }
-
-    &--title {
-     color: #595959; 
-    }
-  }
-
-  &__form {
-    &--submit {
-      width: 319px;
-      height: 40px;
-      background-color: #1890FF;
-      color: #FFFFFF;
-      font-size: 16px;
-      border: none;
-      border-radius: 4px;
-      margin-bottom: 8px;
-      cursor: pointer;
-    }
-  }
-
-  &__footer {
-    color: #595959;
-    font-size: 12px;
-    
-    &--link {
-      color: #1890FF;
-    }
-  } 
 }
+
+.label {
+  display: inline-block;
+  margin-bottom: 12px;
+  
+  &__title {
+  font-size: 14px;
+  }
+
+  &__input {
+    width: 320px;
+    height: 40px;
+    border-radius: 4px;
+    border: 1px solid #D9D9D9;
+
+    &::placeholder {
+      font-size: 16px;
+    }
+  }
+}
+
+.form {
+  &__submit {
+    width: 319px;
+    height: 40px;
+    background-color: #1890FF;
+    color: #FFFFFF;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    cursor: pointer;
+  }
+
+  &__submit-no {
+    width: 319px;
+    height: 40px;
+    background-color: #92c4f3;
+    color: #FFFFFF;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    cursor: pointer;
+  }
+}
+
+.hr {
+  border: 1px solid #d4d3d3;
+}
+
+.agreement {
+  display: flex;
+  cursor: pointer;
+  margin-bottom: 21px;
+
+  &__input {
+    width: 16px;
+    height: 16px;
+  }
+
+  &__title {
+   color: #595959; 
+  }
+}
+
+.footer {
+  color: #595959;
+  font-size: 12px;
+  
+  &__link {
+    color: #1890FF;
+  }
+} 
 
 .errors {
 

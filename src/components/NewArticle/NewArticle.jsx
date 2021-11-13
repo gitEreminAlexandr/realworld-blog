@@ -4,16 +4,17 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import { NEW_ARTICLE, LOADING_ARTICLE } from '../../store/action/articlesAction';
+import { newArticle, LOADING_ARTICLE } from '../../store/action/articlesAction';
 
 import classes from './NewArticle.module.scss';
+import NewArticleTags from './NewArticleTags';
 
 const NewArticle = () => {
-
-  const article = useSelector(({articlesReducer}) => articlesReducer.article);
-  const loadingArticleValue = useSelector(({articlesReducer}) => articlesReducer.loading);
-
   const dispatch = useDispatch();
+
+  const article = useSelector(({ articlesReducer }) => articlesReducer.article);
+  const loadingArticleValue = useSelector(({ articlesReducer }) => articlesReducer.loading);
+  const logging = useSelector(({ userReducer }) => userReducer.isLogging);
 
   const [saveTags, setSaveTags] = useState([]);
   const inputTag = useRef();
@@ -33,10 +34,6 @@ const NewArticle = () => {
     setSaveTags((tag) => tag.filter((item) => item.keyTag !== tagKey));
   };
 
-  const deleteLastTag = () => {
-    setSaveTags((tag) => tag.slice(0, -1));
-  };
-
   const addTag = () => {
     const tag = inputTag.current.value;
     setSaveTags((tags) => [...tags, { titleTag: tag, keyTag: uniqid() }]);
@@ -44,72 +41,49 @@ const NewArticle = () => {
   };
 
   const onSubmitNewArticle = (form) => {
-    dispatch(NEW_ARTICLE(
-      JSON.stringify({
-        article: {
-          ...form,
-          tagList: saveTags.map((item) => item.titleTag),
-        },
-      })
-    ));
+    dispatch(
+      newArticle(
+        JSON.stringify({
+          article: {
+            ...form,
+            tagList: saveTags.map((item) => item.titleTag),
+          },
+        })
+      )
+    );
   };
+
+  if (!logging) history.push(`/articles`);
 
   return (
     <div className={classes['new-article']}>
-      <h2 className={classes['new-article--title']}>Create new article</h2>
+      <h2 className={classes['new-article__title']}>Create new article</h2>
       <form className={classes.form} onSubmit={handleSubmit((form) => onSubmitNewArticle(form))}>
-        <label className={classes.form__title}>
-          <p className={classes['form__title--name']}>Title</p>
-          <input
-            className={classes['form__title--input']}
-            type="text"
-            placeholder="Title"
-            required
-            {...register('title')}
-          />
+        <label className={classes.title}>
+          <p className={classes.title__name}>Title</p>
+          <input className={classes.title__input} type="text" placeholder="Title" required {...register('title')} />
         </label>
-        <label className={classes.form__discription}>
-          <p className={classes['form__discription--name']}>Short description</p>
+        <label className={classes.discription}>
+          <p className={classes.discription__name}>Short description</p>
           <input
-            className={classes['form__discription--input']}
+            className={classes.discription__input}
             type="text"
             placeholder="Short description"
             required
             {...register('description')}
           />
         </label>
-        <label className={classes.form__text}>
-          <p className={classes['form__text--name']}>Text</p>
-          <textarea className={classes['form__text--textarea']} placeholder="Text" required {...register('body')} />
+        <label className={classes.text}>
+          <p className={classes.text__name}>Text</p>
+          <textarea className={classes.text__textarea} placeholder="Text" required {...register('body')} />
         </label>
-        <p className={classes['form__tags--name']}>Tags</p>
-        {saveTags.length > 0 && (
-          <div className={classes.form__saveTag}>
-            {saveTags.map(({ titleTag, keyTag }) => (
-              <div key={keyTag} className={classes['form__saveTag--item']}>
-                <input
-                  className={classes['form__tags--input']}
-                  type="text"
-                  placeholder="Tags"
-                  defaultValue={titleTag}
-                />
-                <button className={classes['form__tags--delete']} type="button" onClick={() => deleteTag(keyTag)}>
-                  Delete
-                </button>
-              </div>
-            ))}
-          </div>
-        )}
-        <label className={classes.form__tags}>
-          <input ref={inputTag} className={classes['form__tags--input']} type="text" placeholder="Tag" />
-          <button className={classes['form__tags--delete']} type="button" onClick={() => deleteLastTag()}>
-            Delete
-          </button>
-          <button className={classes['form__tags--add']} type="button" onClick={() => addTag()}>
-            Add tag
-          </button>
-        </label>
-        <button className={classes['form--submit']} type="submit">
+        <NewArticleTags
+          inputTag={inputTag}
+          saveTags={saveTags}
+          onDeleteTag={deleteTag}
+          onAddTag={addTag}
+        />
+        <button className={classes.form__submit} type="submit">
           Send
         </button>
       </form>
