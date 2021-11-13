@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
-import uniqid from 'uniqid';
 
 import classes from './EditArticle.module.scss';
 
@@ -66,7 +65,7 @@ const EditArticle = () => {
         {saveTags.length > 0 && (
           <div className={classes['tag-list']}>
             {saveTags.map((item) => (
-              <div key={uniqid()} className={classes['tag-list__item']}>
+              <div key={item} className={classes['tag-list__item']}>
                 <input
                   className={classes['tag-list__input']}
                   type="text"

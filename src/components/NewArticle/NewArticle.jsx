@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react';
-import uniqid from 'uniqid';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -17,6 +16,7 @@ const NewArticle = () => {
   const logging = useSelector(({ userReducer }) => userReducer.isLogging);
 
   const [saveTags, setSaveTags] = useState([]);
+  const [key, setKey] = useState(1);
   const inputTag = useRef();
 
   const history = useHistory();
@@ -36,7 +36,8 @@ const NewArticle = () => {
 
   const addTag = () => {
     const tag = inputTag.current.value;
-    setSaveTags((tags) => [...tags, { titleTag: tag, keyTag: uniqid() }]);
+    setSaveTags((tags) => [...tags, { titleTag: tag, keyTag: key }]);
+    setKey((value) => value + 1);
     inputTag.current.value = null;
   };
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { logOut } from '../../store/action/userAction';
@@ -10,6 +10,13 @@ const HeaderLogging = () => {
   const dispatch = useDispatch();
 
   const user = useSelector(({ userReducer }) => userReducer.user);
+
+  const history = useHistory();
+
+  const SignOut = () => {
+    history.push(`/articles`);
+    dispatch(logOut());
+  };
 
   return (
     <>
@@ -36,7 +43,7 @@ const HeaderLogging = () => {
         </Link>
       </li>
       <li className={classes['nav__log-out']}>
-        <button type="button" onClick={() => dispatch(logOut())}>
+        <button type="button" onClick={() => SignOut()}>
           Log Out
         </button>
       </li>
