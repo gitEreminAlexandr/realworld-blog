@@ -14,8 +14,8 @@ const MyArticles = () => {
   const dispatch = useDispatch();
 
   const globalArticle = useSelector(({ articlesReducer }) => articlesReducer.globalArticle);
-  const user = useSelector(({userReducer}) => userReducer.user);
-  const logging = useSelector(({userReducer}) => userReducer.isLogging);
+  const user = useSelector(({ userReducer }) => userReducer.user);
+  const logging = useSelector(({ userReducer }) => userReducer.isLogging);
   const loanding = useSelector(({ indicatorReducer }) => indicatorReducer.spinner);
 
   const history = useHistory();
@@ -24,10 +24,9 @@ const MyArticles = () => {
     dispatch(LOADING_SPINNER(true));
     history.push(`/articles/${slug}`);
   };
-  
 
   if (!logging) history.push(`/articles`);
-  if(globalArticle.length === 0) history.push(`/new-article`);
+  if (globalArticle.length === 0) history.push(`/new-article`);
 
   useEffect(() => {
     dispatch(myArticles(user.username));

@@ -1,3 +1,3 @@
-import MyArticles from "./MyArticles";
+import MyArticles from './MyArticles';
 
 export default MyArticles;

@@ -77,12 +77,7 @@ const NewArticle = () => {
           <p className={classes.text__name}>Text</p>
           <textarea className={classes.text__textarea} placeholder="Text" required {...register('body')} />
         </label>
-        <NewArticleTags
-          inputTag={inputTag}
-          saveTags={saveTags}
-          onDeleteTag={deleteTag}
-          onAddTag={addTag}
-        />
+        <NewArticleTags inputTag={inputTag} saveTags={saveTags} onDeleteTag={deleteTag} onAddTag={addTag} />
         <button className={classes.form__submit} type="submit">
           Send
         </button>
