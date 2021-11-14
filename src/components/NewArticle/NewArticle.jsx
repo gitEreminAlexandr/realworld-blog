@@ -5,8 +5,9 @@ import { useHistory } from 'react-router-dom';
 
 import { newArticle, LOADING_ARTICLE } from '../../store/action/articlesAction';
 
-import classes from './NewArticle.module.scss';
 import NewArticleTags from './NewArticleTags';
+
+import classes from './NewArticle.module.scss';
 
 const NewArticle = () => {
   const dispatch = useDispatch();

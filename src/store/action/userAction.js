@@ -1,4 +1,4 @@
-import apiRealworld from '../../service/api';
+import apiRealworld from '../../service/apiRealworld';
 import { setCookie, deleteCookie, getCookie } from '../../utils/utils';
 import { LOADING_SPINNER, ERROR_INDICATION } from './indicatorAction';
 

@@ -1,6 +1,6 @@
-import classNames from 'classnames';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import classNames from 'classnames';
 
 import { articlesGlobally } from '../../store/action/articlesAction';
 import { LOADING_SPINNER } from '../../store/action/indicatorAction';

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import classes from './SignUp.module.scss';
 
-const SignUpPassword = ({ register, errors, password = '' }) => (
+const SignUpPassword = ({ register, errors, password }) => (
   <>
     <label className={classes.label}>
       <p className={classes.label__title}>Password</p>
@@ -38,10 +38,14 @@ const SignUpPassword = ({ register, errors, password = '' }) => (
   </>
 );
 
+SignUpPassword.defaultProps = {
+  password: '',
+};
+
 SignUpPassword.propTypes = {
   register: PropTypes.func.isRequired,
   errors: PropTypes.objectOf(PropTypes.any).isRequired,
-  password: PropTypes.string.isRequired,
+  password: PropTypes.string,
 };
 
 export default SignUpPassword;

@@ -2,8 +2,9 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import classes from './Header.module.scss';
 import HeaderLogging from './HeaderLogging';
+
+import classes from './Header.module.scss';
 
 const Header = () => {
   const logging = useSelector(({ userReducer }) => userReducer.isLogging);

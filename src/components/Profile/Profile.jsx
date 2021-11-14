@@ -4,11 +4,11 @@ import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import ProfileUserName from './ProfileUserName';
-
-import classes from './Profile.module.scss';
 import ProfileEmail from './ProfileEmail';
 import ProfilePassword from './ProfilePassword';
 import ProfileImg from './ProfileImg';
+
+import classes from './Profile.module.scss';
 
 const Profile = () => {
   const user = useSelector(({ userReducer }) => userReducer.user);

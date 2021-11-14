@@ -25,12 +25,14 @@ const MyArticles = () => {
     history.push(`/articles/${slug}`);
   };
 
-  if (!logging) history.push(`/sign-in`);
-  if (logging && globalArticle.length === 0) history.push(`/new-article`);
-
   useEffect(() => {
     dispatch(myArticles(user.username));
   }, [dispatch, user.username]);
+
+  if (!logging) history.push(`/sign-in`);
+  if (logging && globalArticle.length === 0) {
+    return <h3>You have no articles</h3>;
+  }
 
   return (
     <div className={classes.article}>
