@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import classNames from 'classnames';
+import cn from 'classnames';
 
 import { articlesGlobally } from '../../store/action/articlesAction';
 import { LOADING_SPINNER } from '../../store/action/indicatorAction';
@@ -19,14 +19,14 @@ const Pagination = () => {
   ]);
   const [pagesActive, setPagesActive] = useState(1);
 
-  const pageActiveClassName = (count) => classNames(classes.count, pagesActive === count && classes.active);
+  const pageActiveClassName = (count) => cn(classes.count, pagesActive === count && classes.active);
 
-  const itClassName = classNames(
+  const ltClassName = cn(
     classes.pagination__lt,
     pages[0].count === pagesActive && classes['pagination__lt-active']
   );
 
-  const gtClassName = classNames(
+  const gtClassName = cn(
     classes.pagination__gt,
     pages.length === pagesActive && classes['pagination__gt-active']
   );
@@ -57,7 +57,7 @@ const Pagination = () => {
 
   return (
     <div className={classes.pagination}>
-      <button type="button" className={itClassName} onClick={() => pageLt()}>
+      <button type="button" className={ltClassName} onClick={() => pageLt()}>
         &lt;
       </button>
       {pages.map(({ offset, count }) => (

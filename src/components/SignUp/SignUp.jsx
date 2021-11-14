@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import classNames from 'classnames';
+import cn from 'classnames';
 
 import { userRegister } from '../../store/action/userAction';
 
@@ -17,7 +17,7 @@ const SignUp = () => {
   const logging = useSelector(({ userReducer }) => userReducer.isLogging);
   const errorRegister = useSelector(({ userReducer }) => userReducer.errorRegister);
   const [submitActive, setSubmitActive] = useState(true);
-  const submitBtn = classNames(submitActive ? classes.form__submit : classes['form__submit-no']);
+  const submitBtn = cn(submitActive ? classes.form__submit : classes['form__submit-no']);
 
   const history = useHistory();
 
