@@ -31,6 +31,7 @@
 
 .tag-list {
   display: flex;
+  flex-wrap: wrap;
 
   &__item {
     font-size: 12px;

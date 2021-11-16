@@ -66,7 +66,7 @@ const NewArticle = () => {
       <form className={classes.form} onSubmit={handleSubmit((form) => onSubmitNewArticle(form))}>
         <label className={classes.title}>
           <p className={classes.title__name}>Title</p>
-          <input className={classes.title__input} type="text" placeholder="Title" required {...register('title')} />
+          <input className={classes.title__input} type="text" placeholder="Title" required {...register('title')}/>
         </label>
         <label className={classes.discription}>
           <p className={classes.discription__name}>Short description</p>
