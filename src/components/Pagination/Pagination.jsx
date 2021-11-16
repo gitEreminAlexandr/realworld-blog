@@ -21,15 +21,9 @@ const Pagination = () => {
 
   const pageActiveClassName = (count) => cn(classes.count, pagesActive === count && classes.active);
 
-  const ltClassName = cn(
-    classes.pagination__lt,
-    pages[0].count === pagesActive && classes['pagination__lt-active']
-  );
+  const ltClassName = cn(classes.pagination__lt, pages[0].count === pagesActive && classes['pagination__lt-active']);
 
-  const gtClassName = cn(
-    classes.pagination__gt,
-    pages.length === pagesActive && classes['pagination__gt-active']
-  );
+  const gtClassName = cn(classes.pagination__gt, pages.length === pagesActive && classes['pagination__gt-active']);
 
   const pageLt = () => {
     if (pagesActive !== pages[0].count) {

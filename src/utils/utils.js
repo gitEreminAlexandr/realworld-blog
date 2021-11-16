@@ -38,4 +38,9 @@ function deleteCookie(name) {
   });
 }
 
-export { setCookie, getCookie, deleteCookie };
+const parsValueInArray = (value, array) => {
+  const arr = array.map((item) => item.titleTag);
+  return !arr.includes(value);
+};
+
+export { setCookie, getCookie, deleteCookie, parsValueInArray };

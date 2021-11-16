@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import { newArticle, LOADING_ARTICLE } from '../../store/action/articlesAction';
+import { parsValueInArray } from '../../utils/utils';
 
 import NewArticleTags from './NewArticleTags';
 
@@ -37,9 +38,11 @@ const NewArticle = () => {
 
   const addTag = () => {
     const tag = inputTag.current.value;
-    setSaveTags((tags) => [...tags, { titleTag: tag, keyTag: key }]);
-    setKey((value) => value + 1);
-    inputTag.current.value = null;
+    if (parsValueInArray(tag, saveTags) && tag.length >= 1) {
+      setSaveTags((tags) => [...tags, { titleTag: tag, keyTag: key }]);
+      setKey((value) => value + 1);
+      inputTag.current.value = null;
+    }
   };
 
   const onSubmitNewArticle = (form) => {
